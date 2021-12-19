@@ -1,17 +1,17 @@
 const express = require('express'),
-    app = express();
+app = express();
 app.use(express.json());
 
 const bodyParser=require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.listen(8080, process.env.IP, () => {
+app.listen(3000, process.env.IP, () => {
     console.log('Server successfully started!');
 });
 const cors = require('cors');
 
 const { v4: uuidv4 } = require('uuid');
-app.use(uuidv4);
+
 
 var validator  = require('email-validator');
 
@@ -53,34 +53,22 @@ app.get("/addFlight", (req, res) => {
 })
 
 
+
 app.get("/createUser",(req,res) =>{
-    
-    console.log("dakhalt");
-    var valid_email = validator.validate(req.body.email);
-
-    var dob = DateTime.now();
-    //TODO:Check the response once error is generated
-    if(!valid_email){
-        res.send("Your email was not in the correct format");
-    }else{
-            const user = new user({
+            var today = new Date();
+            const user1 = new user({
                 Uid: uuidv4(),//Generate new random user ID 
-                Name:req.body.name ,
-                Email:req.body.email ,
+                Name:req.body.name,
+                Email:req.body.email,
                 Password:req.body.password,
-                DateOfBirth:dob , 
-
+                DateOfBirth:today , 
             })
-            console.log(user.Uid);
-            user.save().then((result) => {
+            user1.save().then((result) => {
                 res.send(result)
             })
                 .catch((err) => {
                     console.log(err)
                 })
-
-         }
-
 })
 
 
