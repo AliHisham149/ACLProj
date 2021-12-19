@@ -18,7 +18,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
       },
-    DOB: {
+    DateOfBirth: {
         type: Date,
         required: true,
       },

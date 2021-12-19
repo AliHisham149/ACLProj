@@ -1,6 +1,7 @@
 const express = require('express'),
     app = express();
 app.use(express.json());
+
 const bodyParser=require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -9,10 +10,17 @@ app.listen(8080, process.env.IP, () => {
 });
 const cors = require('cors');
 
+const { v4: uuidv4 } = require('uuid');
+app.use(uuidv4);
+
+var validator  = require('email-validator');
+
+
 app.use(cors());
 
 mongoose = require('mongoose');
 const flight = require('./Models/flights.js')
+const user = require('./Models/users.js')
 require('dotenv').config(); 
 app.use(express.json());
 const uri = "mongodb://ACLTeam:ACLTeam123@cluster0-shard-00-00.o2jpy.mongodb.net:27017,cluster0-shard-00-01.o2jpy.mongodb.net:27017,cluster0-shard-00-02.o2jpy.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-4vsmho-shard-0&authSource=admin&retryWrites=true&w=majority";
@@ -44,7 +52,39 @@ app.get("/addFlight", (req, res) => {
     res.send("Flight successfully added!")
 })
 
-app.get("/showFlights" , (req, res) => {                                               ``
+
+app.get("/createUser",(req,res) =>{
+    
+    console.log("dakhalt");
+    var valid_email = validator.validate(req.body.email);
+
+    var dob = DateTime.now();
+    //TODO:Check the response once error is generated
+    if(!valid_email){
+        res.send("Your email was not in the correct format");
+    }else{
+            const user = new user({
+                Uid: uuidv4(),//Generate new random user ID 
+                Name:req.body.name ,
+                Email:req.body.email ,
+                Password:req.body.password,
+                DateOfBirth:dob , 
+
+            })
+            console.log(user.Uid);
+            user.save().then((result) => {
+                res.send(result)
+            })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+         }
+
+})
+
+
+app.get("/showFlights" , (req, res) => {                                               
     flight.find({}).exec(function(err, data){
         res.send(data)
     })
