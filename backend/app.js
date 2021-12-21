@@ -21,6 +21,8 @@ app.use(cors());
 mongoose = require('mongoose');
 const flight = require('./Models/flights.js')
 const user = require('./Models/users.js')
+const reservation = require('.Models/bookins.js');
+const booking = require('./Models/bookings.js');
 require('dotenv').config(); 
 app.use(express.json());
 const uri = "mongodb://ACLTeam:ACLTeam123@cluster0-shard-00-00.o2jpy.mongodb.net:27017,cluster0-shard-00-01.o2jpy.mongodb.net:27017,cluster0-shard-00-02.o2jpy.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-4vsmho-shard-0&authSource=admin&retryWrites=true&w=majority";
@@ -53,6 +55,61 @@ app.get("/addFlight", (req, res) => {
 })
 
 
+app.post('/createReservation',(req,res)=>{
+    const reservation1 = new booking({
+      //User Data
+      Uid: req.body.uid,
+      Name:req.body.name,
+      Email:req.body.email,
+      DateOfBirth:req.body.dob,
+
+    //First Flight Data
+      DepartureFlightNumber:req.body.depflightno,
+      DepartureFlightSeats:req.body.depFlightSeats,  //Array of Strings
+      FirstFrom:req.body.firstFrom,
+      FirstTo:req.body.firstTo,
+      FirstFlightDate:req.body.firstDate,
+      FirstTerminalDeparture:req.body.firstTerminalDep,
+      FirstTerminalArrival:req.body.FirstTerminalArr,
+      FirstArrivalTime:req.body.FirstArrTime,
+      FirstDepartureTime:req.body.FirstDepTime,
+      FirstSeatType:req.body.FirstSeatType,  //Array of Strings
+
+      //Second Flight data
+      ReturnFlightNumber:req.body.retFlightNumber,
+      ReturnFlightSeats:req.body.retFlightSeats,
+      SecondFrom:req.body.secondFrom,
+      SecondTo:req.body.secondTo,
+      SecondFlightDate:req.body.secondFlightDate,
+      SecondTerminalDeparture:req.body.secondTerminalDep,
+      SecondTerminalArrival:req.body.SecondTerminalArr,
+      SecondArrivalTime:req.body.secondArrTime,
+      SecondDepartureTime:req.body.secondDepTime,
+      SecondSeatTypes:req.body.secondSeatTypes,
+
+
+      TotalPrice:req.body.price,
+
+
+    })
+    reservation1.save().then((result) => {
+        res.send(result)
+    })
+        .catch((err) => {
+            console.log(err)
+        })
+
+})
+
+app.get("/getReservations",(req,res)=>{
+
+    reservation.find({}).exec(function(err, data){
+        
+        res.send(data)
+        
+    })
+
+})
 
 app.get("/createUser",(req,res) =>{
             var today = new Date();
