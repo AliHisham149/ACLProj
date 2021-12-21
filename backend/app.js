@@ -18,10 +18,12 @@ var validator  = require('email-validator');
 
 app.use(cors());
 
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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');
 mongoose = require('mongoose');
 const flight = require('./Models/flights.js')
 const user = require('./Models/users.js')
-const reservation = require('.Models/bookins.js');
+const reservation = require('./Models/bookings.js');
 const booking = require('./Models/bookings.js');
 require('dotenv').config(); 
 app.use(express.json());
@@ -91,15 +93,38 @@ app.post('/createReservation',(req,res)=>{
       TotalPrice:req.body.price,
 
 
+
+
+
+
     })
     reservation1.save().then((result) => {
         res.send(result)
+
+        //Sending Email to user
+        const msg = {
+            to: req.body.email,
+            from: 'test@example.com', // Use the email address or domain you verified above
+            subject: 'A booking was made with this Email',
+            text: 'you can go to this link to check out your bookings ',
+          };
+          sgMail.send(msg).then(() => {}, error => {
+                    console.error(error);
+
+                if (error.response) {
+                console.error(error.response.body)
+                }
+                console.log("Email sent successfuly ")
+            });
+        
     })
         .catch((err) => {
             console.log(err)
         })
 
 })
+
+
 
 app.get("/getReservations",(req,res)=>{
 
