@@ -54,4 +54,5 @@ const flight = mongoose.model('flights', flightSchema);
 module.exports = flight;
 
 //We need to add to this schema (cost)
+//Array fe kol el seats (Most probably haykon sabet like [A1,B1,C1,etc...]) and it gets initialized lwahdo when creating a flight
 //Asked yehia about trip duration and baggage allowance and waiting for his answer so we know how to update it 
