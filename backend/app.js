@@ -5,7 +5,7 @@ app.use(express.json());
 const bodyParser=require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.listen(3000, process.env.IP, () => {
+app.listen(8080, process.env.IP, () => {
     console.log('Server successfully started!');
 });
 const cors = require('cors');
@@ -57,101 +57,6 @@ app.get("/addFlight", (req, res) => {
 })
 
 
-app.post('/createReservation',(req,res)=>{
-    const reservation1 = new booking({
-      //User Data
-      Uid: req.body.uid,
-      Name:req.body.name,
-      Email:req.body.email,
-      DateOfBirth:req.body.dob,
-
-    //First Flight Data
-      DepartureFlightNumber:req.body.depflightno,
-      DepartureFlightSeats:req.body.depFlightSeats,  //Array of Strings
-      FirstFrom:req.body.firstFrom,
-      FirstTo:req.body.firstTo,
-      FirstFlightDate:req.body.firstDate,
-      FirstTerminalDeparture:req.body.firstTerminalDep,
-      FirstTerminalArrival:req.body.FirstTerminalArr,
-      FirstArrivalTime:req.body.FirstArrTime,
-      FirstDepartureTime:req.body.FirstDepTime,
-      FirstSeatType:req.body.FirstSeatType,  //Array of Strings
-
-      //Second Flight data
-      ReturnFlightNumber:req.body.retFlightNumber,
-      ReturnFlightSeats:req.body.retFlightSeats,
-      SecondFrom:req.body.secondFrom,
-      SecondTo:req.body.secondTo,
-      SecondFlightDate:req.body.secondFlightDate,
-      SecondTerminalDeparture:req.body.secondTerminalDep,
-      SecondTerminalArrival:req.body.SecondTerminalArr,
-      SecondArrivalTime:req.body.secondArrTime,
-      SecondDepartureTime:req.body.secondDepTime,
-      SecondSeatTypes:req.body.secondSeatTypes,
-
-
-      TotalPrice:req.body.price,
-
-
-
-
-
-
-    })
-    reservation1.save().then((result) => {
-        res.send(result)
-
-        //Sending Email to user
-        const msg = {
-            to: req.body.email,
-            from: 'test@example.com', // Use the email address or domain you verified above
-            subject: 'A booking was made with this Email',
-            text: 'you can go to this link to check out your bookings ',
-          };
-          sgMail.send(msg).then(() => {}, error => {
-                    console.error(error);
-
-                if (error.response) {
-                console.error(error.response.body)
-                }
-                console.log("Email sent successfuly ")
-            });
-        
-    })
-        .catch((err) => {
-            console.log(err)
-        })
-
-})
-
-
-
-app.get("/getReservations",(req,res)=>{
-
-    reservation.find({}).exec(function(err, data){
-        
-        res.send(data)
-        
-    })
-
-})
-
-app.get("/createUser",(req,res) =>{
-            var today = new Date();
-            const user1 = new user({
-                Uid: uuidv4(),//Generate new random user ID 
-                Name:req.body.name,
-                Email:req.body.email,
-                Password:req.body.password,
-                DateOfBirth:today , 
-            })
-            user1.save().then((result) => {
-                res.send(result)
-            })
-                .catch((err) => {
-                    console.log(err)
-                })
-})
 
 
 app.get("/showFlights" , (req, res) => {                                               
@@ -207,4 +112,150 @@ app.post("/searchFlights",async (req, res) => {
         res.json({message:err});}
     
  });
+
+
+
+
+//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPRINT2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  
+ app.get("/addReservation", (req, res) => {
+    const flight1 = new booking({
+         //User Data
+      Uid: "jd10j92dja",
+      Name:"Boody",
+      Email:"alihisham12345@gmail.com",
+      DateOfBirth:22-12-2021,
+
+    //First Flight Data
+      DepartureFlightNumber:"A69",
+      DepartureFlightSeats:["23C","25A"],  //Array of Strings
+      FirstFrom:"BERLIN",
+      FirstTo:"PARIS",
+      FirstFlightDate:21-2-2002,
+      FirstTerminalDeparture:6,
+      FirstTerminalArrival:2,
+      FirstArrivalTime:"10:40",
+      FirstDepartureTime:"9:20",
+      FirstSeatType:["Economy","Business"],  //Array of Strings
+
+      //Second Flight data
+      ReturnFlightNumber:"A420",
+      ReturnFlightSeats:["69A","420B"],
+      SecondFrom:"PARIS",
+      SecondTo:"BERLIN",
+      SecondFlightDate:26-2-2002,
+      SecondTerminalDeparture:3,
+      SecondTerminalArrival:5,
+      SecondArrivalTime:"11:55",
+      SecondDepartureTime:"10:15",
+      SecondSeatTypes:["Economy","Business"],
+
+
+      TotalPrice:69.420
+
+    })
+    flight1.save();
+    res.send("Reservation successfully added!")
+})
+
+
+app.post('/createReservation',(req,res)=>{
+    const reservation1 = new booking({
+      //User Data
+      Uid: req.body.uid,
+      Name:req.body.name,
+      Email:req.body.email,
+      DateOfBirth:req.body.dob,
+
+    //First Flight Data
+      DepartureFlightNumber:req.body.depflightno,
+      DepartureFlightSeats:req.body.depFlightSeats,  //Array of Strings
+      FirstFrom:req.body.firstFrom,
+      FirstTo:req.body.firstTo,
+      FirstFlightDate:req.body.firstDate,
+      FirstTerminalDeparture:req.body.firstTerminalDep,
+      FirstTerminalArrival:req.body.FirstTerminalArr,
+      FirstArrivalTime:req.body.FirstArrTime,
+      FirstDepartureTime:req.body.FirstDepTime,
+      FirstSeatType:req.body.FirstSeatType,  //Array of Strings
+
+      //Second Flight data
+      ReturnFlightNumber:req.body.retFlightNumber,
+      ReturnFlightSeats:req.body.retFlightSeats,
+      SecondFrom:req.body.secondFrom,
+      SecondTo:req.body.secondTo,
+      SecondFlightDate:req.body.secondFlightDate,
+      SecondTerminalDeparture:req.body.secondTerminalDep,
+      SecondTerminalArrival:req.body.SecondTerminalArr,
+      SecondArrivalTime:req.body.secondArrTime,
+      SecondDepartureTime:req.body.secondDepTime,
+      SecondSeatTypes:req.body.secondSeatTypes,
+
+
+      TotalPrice:req.body.price
+
+
+
+
+
+
+    })
+    reservation1.save().then((result) => {
+        res.send(result)
+
+        //Sending Email to user
+        const msg = {
+            to: req.body.email,
+            from: 'test@example.com', // Use the email address or domain you verified above
+            subject: 'A booking was made with this Email',
+            text: 'you can go to this link to check out your bookings ',
+          };
+          sgMail.send(msg).then(() => {}, error => {
+                    console.error(error);
+
+                if (error.response) {
+                console.error(error.response.body)
+                }
+                console.log("Email sent successfuly ")
+            });
+        
+    })
+        .catch((err) => {
+            console.log(err)
+        })
+
+})
+
+
+
+app.get("/getReservations",(req,res)=>{
+    booking.find({}).exec(function(err, data){    
+        res.send(data)     
+    })
+})
+
+app.get("/createUser",(req,res) =>{
+            var today = new Date();
+            const user1 = new user({
+                Uid: uuidv4(),//Generate new random user ID 
+                Name:req.body.name,
+                Email:req.body.email,
+                Password:req.body.password,
+                DateOfBirth:today , 
+            })
+            user1.save().then((result) => {
+                res.send(result)
+            })
+                .catch((err) => {
+                    console.log(err)
+                })
+})
+//Functions needed to be implemented 
+
+app.post("/cancelReservation", (req, res) => {
+    //1-This method should delete the reservation from the database of reservations
+    //2-Should get first flight seats which were booked in the reservation and put them back in available seat map array 
+    //3-Check for the first flight seats type and increase available seats of this type 
+    //4- Repeat 2 and 3 for second flight  
+
+   });

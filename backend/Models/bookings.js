@@ -79,7 +79,7 @@ const bookingSchema = new Schema({
 
       //Second flight (from destination) Data
     ReturnFlightNumber: {
-        type: Date,
+        type: String,
         required: true,
     },
     ReturnFlightSeats: {
