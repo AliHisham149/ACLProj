@@ -52,3 +52,6 @@ const flightSchema = new Schema({
 
 const flight = mongoose.model('flights', flightSchema);
 module.exports = flight;
+
+//We need to add to this schema (cost)
+//Asked yehia about trip duration and baggage allowance and waiting for his answer so we know how to update it 
