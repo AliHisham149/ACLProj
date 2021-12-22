@@ -259,8 +259,16 @@ app.post("/cancelReservation", (req, res) => {
     //4- Repeat 2 and 3 for second flight  
 
     //find booking in bookings
-    //get dep flight by flight number
-    //put seats from dep flight seats from booking back to dep seats in flights
+    // const bookingID = req.body._id
+    // const deptFlightNo = booking.find(bookingID).DepartureFlightNumber
+    // const retFlightNo =  booking.find(bookingID).ReturnFlightNumber
+    // const deptSeatCount = booking.find(bookingID).DepartureFlightSeats.length
+    // const retSeatCount = booking.find(bookingID).ReturnFlightSeats.length
+    // //get dep flight by flight number
+    // //put seats from dep flight seats from booking back to dep seats in flights
+    // for (let i = 0; i < deptSeatCount; i++){
+
+    // }
     //increment available seats in flight by size of array^ BY TYPE
     //get return flight by flight number
     //put seats from booking back to return seats in flights
