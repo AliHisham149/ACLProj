@@ -277,25 +277,45 @@ app.get("/createUser",(req,res) =>{
 //Functions needed to be implemented 
 
 app.post("/cancelReservation", (req, res) => {
-    //1-This method should delete the reservation from the database of reservations
-    //2-Should get first flight seats which were booked in the reservation and put them back in available seat map array 
-    //3-Check for the first flight seats type and increase available seats of this type 
-    //4- Repeat 2 and 3 for second flight  
-
+   
     //find booking in bookings
-    // const bookingID = req.body._id
-    // const deptFlightNo = booking.find(bookingID).DepartureFlightNumber
-    // const retFlightNo =  booking.find(bookingID).ReturnFlightNumber
-    // const deptSeatCount = booking.find(bookingID).DepartureFlightSeats.length
-    // const retSeatCount = booking.find(bookingID).ReturnFlightSeats.length
-    // //get dep flight by flight number
-    // //put seats from dep flight seats from booking back to dep seats in flights
-    // for (let i = 0; i < deptSeatCount; i++){
+    const bookingID = req.body._id
+    const deptFlightNo = booking.find(bookingID).DepartureFlightNumber
+    const retFlightNo =  booking.find(bookingID).ReturnFlightNumber
+    const deptSeatCount = booking.find(bookingID).DepartureFlightSeats.length
+    const retSeatCount = booking.find(bookingID).ReturnFlightSeats.length
+    
+    //put seats from dep flight seats from booking back to dep seats in flights
+    for (let i = 0; i < deptSeatCount; i++) {
+        // Move seats from booking to be available in flight 
+        flight.find(deptFlightNo).SeatMap.push(booking.find(bookingID).DepartureFlightSeats[i])
 
-    // }
-    //increment available seats in flight by size of array^ BY TYPE
-    //get return flight by flight number
-    //put seats from booking back to return seats in flights
-    //increment available seats in return flight record in collection flights by array size^
-    //delete booking from bookings
+        // Increase number of available seats depending on seat type in flight 
+        if (booking.find(bookingID).FirstSeatType[i]=== "Economy") {
+            flight.find(deptFlightNo).EconomyClassSeatsCount++
+        }
+        else if (booking.find(bookingID).FirstSeatType[i]=== "Business") {
+            flight.find(deptFlightNo).BusinessClassSeatsCount++
+        }
+        else {
+            flight.find(deptFlightNo).FirstClassSeatsCount++
+        }
+    }
+
+    // Repeat same loop for the return flight in resevation
+    for (let i = 0; i < retSeatCount; i++){
+        flight.find(retFlightNo).SeatMap.push(booking.find(bookingID).ReturnFlightSeats[i])
+
+        if (booking.find(bookingID).FirstSeatType[i]=== "Economy") {
+            flight.find(retFlightNo).EconomyClassSeatsCount++
+        }
+        else if (booking.find(bookingID).FirstSeatType[i]=== "Business") {
+            flight.find(retFlightNo).BusinessClassSeatsCount++
+        }
+        else {
+            flight.find(retFlightNo).FirstClassSeatsCount++
+        }
+    }
+    //Remove booking from bookings
+    booking.remove(bookingID)
    });
