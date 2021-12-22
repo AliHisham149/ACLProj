@@ -2,6 +2,7 @@ import Login from './Login';
 import Admin from './Admin';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import User from "./User";
+import SelectedFlight from "./SelectedFlight";
 
 const Navbar = () => {
     return(
@@ -23,6 +24,7 @@ const Navbar = () => {
             <Route path="/Admin" element={<Admin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/User" element={<User />} />
+            <Route path="/SelectedFlight" element={<SelectedFlight/>} />
             
               
         </Routes>

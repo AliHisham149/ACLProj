@@ -17,8 +17,7 @@ function Login(){
     return (
         <div className="container">
           {/* <h1>Welcome to No Way Home Airlines </h1> */}
-        
-
+          
         <div>
           <h2>
             Login
