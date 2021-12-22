@@ -62,6 +62,10 @@ const bookingSchema = new Schema({
         type: String,
         required: true
       },
+      FirstDuration:{
+          type:String,
+          required:true
+      },
       //each entry in array corresponds to which seat
       //example Seats : [25E , 25D,12A]
       //SeatType : [economy,economy,first]
@@ -70,6 +74,11 @@ const bookingSchema = new Schema({
           type:[String],
           required:true
       },
+      FirstCost:{
+        type:Number,
+        required:true
+      },
+
 
 
 
@@ -115,9 +124,17 @@ const bookingSchema = new Schema({
         type: String,
         required: true
       },
+      SecondDuration:{
+          type:String,
+          required:true
+      },
       SecondSeatTypes:{
           type:[String],
           required:true
+      },
+      SecondCost:{
+          type:Number,
+        required:true
       },
 
 
