@@ -258,4 +258,12 @@ app.post("/cancelReservation", (req, res) => {
     //3-Check for the first flight seats type and increase available seats of this type 
     //4- Repeat 2 and 3 for second flight  
 
+    //find booking in bookings
+    //get dep flight by flight number
+    //put seats from dep flight seats from booking back to dep seats in flights
+    //increment available seats in flight by size of array^ BY TYPE
+    //get return flight by flight number
+    //put seats from booking back to return seats in flights
+    //increment available seats in return flight record in collection flights by array size^
+    //delete booking from bookings
    });
