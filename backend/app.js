@@ -175,6 +175,9 @@ app.post("/searchFlights",async (req, res) => {
 
     })
     flight1.save();
+
+
+
     res.send("Reservation successfully added!")
 })
 
@@ -219,11 +222,45 @@ app.post('/createReservation',(req,res)=>{
       TotalPrice: totalCost,
 
 
-
-
-
-
     })
+    // Remove booked seats from flights' seat maps
+    
+    const deptSeatCount = req.body.DepartureFlightSeats.length
+    const retSeatCount = req.body.ReturnFlightSeats.length
+
+    for (let i = 0; i < deptSeatCount; i++) {
+        // Remove seats from seat map of flight
+        flight.find(req.body.DepartureFlightNumber).SeatMap.pop(req.body.DepartureFlightSeats[i])
+
+        // Decrement number of available seats depending on seat type in flight 
+        if (req.body.FirstSeatType[i] === "Economy") {
+            flight.find(req.body.DepartureFlightNumber).EconomyClassSeatsCount--
+        }
+        else if (req.body.FirstSeatType[i]=== "Business") {
+            flight.find(req.body.DepartureFlightNumber).BusinessClassSeatsCount--
+        }
+        else {
+            flight.find(req.body.DepartureFlightNumber).FirstClassSeatsCount--
+        }
+    }
+
+    for (let i = 0; i < retSeatCount; i++) {
+        // Remove seats from seat map of flight
+        flight.find(req.body.ReturnFlightNumber).SeatMap.pop(req.body.ReturnFlightSeats[i])
+
+        // Decrement number of available seats depending on seat type in flight 
+        if (req.body.FirstSeatType[i] === "Economy") {
+            flight.find(req.body.ReturnFlightNumber).EconomyClassSeatsCount--
+        }
+        else if (req.body.FirstSeatType[i]=== "Business") {
+            flight.find(req.body.ReturnFlightNumber).BusinessClassSeatsCount--
+        }
+        else {
+            flight.find(req.body.ReturnFlightNumber).FirstClassSeatsCount--
+        }
+    }
+    
+
     reservation1.save().then((result) => {
         res.send(result)
 
@@ -247,6 +284,7 @@ app.post('/createReservation',(req,res)=>{
         .catch((err) => {
             console.log(err)
         })
+
 
 })
 
