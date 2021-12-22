@@ -11,7 +11,7 @@ function DeleteReservation(props) {
         
       })
       .then(function (response) {
-        console.log("xxx");
+        // console.log("xxx");
       })}>Yes</button>
 
 

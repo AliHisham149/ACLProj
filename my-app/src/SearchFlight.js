@@ -67,10 +67,10 @@ function SearchBody(props) {
       FirstClassSeatsCount: first
     }
     let o = Object.fromEntries(Object.entries(queryParams).filter(([_, v]) => v != ""));
-            console.log("searc1h");
+            // console.log("searc1h");
           axios.post('http://localhost:8080/searchFlights', o)
             .then(function (response) {
-              console.log("search");
+              // console.log("search");
               setFlightlist(response.data)
             })
           

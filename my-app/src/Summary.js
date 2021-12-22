@@ -41,6 +41,8 @@ function Summary(){
     let navigate=useNavigate();
     let F=localStorage.getItem("flight");
     const Flight= JSON.parse(F);
+    let Logged=localStorage.getItem("loggedin");
+    const Check= JSON.parse(Logged);
     const flightno= Flight.FlightNumber;
     const arrivaltime=Flight.ArrivalTime;
     const departuretime=Flight.DepartureTime;
@@ -79,7 +81,14 @@ function Summary(){
                     <br/>
 
                     <StyledTableCell align="center">
-                 <Button onClick={() =>{navigate("/ChooseSeats");
+                 <Button onClick={() =>{ 
+                     if(Check==true) 
+                         navigate("/ChooseSeats")
+                        ;
+                        else
+                        alert("please login first");
+                        
+                        
                 
                 }} 
                 variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Confirm Booking</Button>

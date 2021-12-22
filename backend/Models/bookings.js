@@ -66,10 +66,6 @@ const bookingSchema = new Schema({
           type:String,
           required:true
       },
-      //each entry in array corresponds to which seat
-      //example Seats : [25E , 25D,12A]
-      //SeatType : [economy,economy,first]
-      //so 25E and D will be economy and 12A is first class
       FirstSeatType:{
           type:[String],
           required:true

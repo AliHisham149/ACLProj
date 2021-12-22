@@ -49,7 +49,7 @@ function App() {
   const [flightlist, setFlightlist] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8080/showFlights").then(res => {
-      console.log("xxxx");
+      // console.log("xxxx");
       setFlightlist(res.data);
     })
   })

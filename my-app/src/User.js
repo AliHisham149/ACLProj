@@ -20,6 +20,7 @@ import UserSearchBody from './UserSearchFlight';
 // import Login from './Login';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
+import Itinerary from './itinerary';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -45,10 +46,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function User(){
     let navigate = useNavigate();
+    let Logged=localStorage.getItem("loggedin");
+    const Check= JSON.parse(Logged);
     const [flightlist, setFlightlist] = useState([]);
     useEffect(() => {
       axios.get("http://localhost:8080/showFlights").then(res => {
-        console.log("xxxx");
+        // console.log("xxxx");
         setFlightlist(res.data);
       })
     })
@@ -62,8 +65,26 @@ function User(){
 
     return(
 <div>
+<a   href="/" >Back</a> 
+
+
+
        <TableContainer component={Paper}>
        <h1 className="Website-header" align="center">  </h1>
+
+       <StyledTableCell align="center">
+                 
+                 <Button onClick={() =>{
+                   if(Check==true)
+                     navigate("/Profile");
+                     else 
+                     alert("please login first");
+                    
+                  
+                  }}
+                variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Personal Info</Button>
+                 </StyledTableCell>
+
        <h1 align="center" color="#d89d28">Flights Timetable</h1> 
          <Table sx={{ minWidth: 500 }} aria-label="customized table" size='m'>
            <TableHead>
@@ -117,6 +138,28 @@ function User(){
        <br/>
        <h1 align="center" color="#d89d28">Search for your flight</h1> 
        <UserSearchBody></UserSearchBody>
+
+       <h1 align="center" color="#d89d28">Your Reservations</h1>
+       {/* <Itinerary></Itinerary>; */}
+       <Button onClick={() =>{
+              if(Check==true)
+               navigate("/itinerary");
+                else
+                alert("please login first");
+                }}
+              variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Select</Button>
+       
+<br/>
+       
+                   
+                  
+       
+       
+       
+
+       
+
+
        </div>
 
 )
@@ -124,7 +167,6 @@ function User(){
 }
 
 export default User;
-
 
 
 

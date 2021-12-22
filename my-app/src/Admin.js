@@ -47,7 +47,7 @@ function Admin(){
     const [flightlist, setFlightlist] = useState([]);
     useEffect(() => {
       axios.get("http://localhost:8080/showFlights").then(res => {
-        console.log("xxxx");
+        // console.log("xxxx");
         setFlightlist(res.data);
       })
     })
@@ -104,6 +104,9 @@ function Admin(){
                  ec={u.EconomyClassSeatsCount}
                  bs={u.BusinessClassSeatsCount}
                  first={u.FirstClassSeatsCount}
+                 cost={u.FlightCost}
+                 duration={u.TripDuration}
+                 seatMap={u.seatMap}
                /></StyledTableCell>
                <StyledTableCell align="center">
                  <Popup trigger={<Button variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Delete</Button>} position="right center">

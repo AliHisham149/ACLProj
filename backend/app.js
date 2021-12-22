@@ -156,6 +156,7 @@ app.post("/searchFlights",async (req, res) => {
       FirstDepartureTime:"9:20",
       FirstDuration:"1:20",
       FirstSeatType:["Economy","Business"],  //Array of Strings
+      FirstCost:20,
 
       //Second Flight data
       ReturnFlightNumber:"A420",
@@ -169,9 +170,10 @@ app.post("/searchFlights",async (req, res) => {
       SecondDepartureTime:"10:15",
       SecondDuration:"1:40",
       SecondSeatTypes:["Economy","Business"],
+      SecondCost:40,
 
 
-      TotalPrice:69.420
+      TotalPrice:60
 
     })
     flight1.save();

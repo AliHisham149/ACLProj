@@ -20,7 +20,10 @@ function UpdateFlight(props) {
   const [ec, setEc] = useState(props.ec);
   const [bs, setBs] = useState(props.bs);
   const [first, setFirst] = useState(props.first);
-
+  const [cost, setCost] = useState(props.cost);
+  const [duration, setDuration] = useState(props.duration);
+  // const [seatMap,setSeatMap] = useState(props.seatMap);
+  const seatMap = props.seatMap;
 
 
 
@@ -37,17 +40,18 @@ function UpdateFlight(props) {
         FlightDate: date,
         ArrivalTime: arr,
         DepartureTime: dep,
-        // FlightDuration:duration,
+        FlightDuration:duration,
         TerminalDeparture: tdep,
         TerminalArrival: tarr,
         EconomyClassSeatsCount: ec,
         BusinessClassSeatsCount: bs,
         FirstClassSeatsCount: first,
-        // FlightCost:cost,
+        FlightCost:cost,
+        seatMap:seatMap,
 
       })
         .then(function (response) {
-          console.log("xxx");
+          // console.log("xxx");
         })
       setShow(false);
       setClicked(false);
@@ -92,6 +96,13 @@ function UpdateFlight(props) {
             <br />
             <input type="text" id="seat" name="seat" defaultValue={props.dep} onChange={event => setDep(event.target.value)} />
             <br />
+        
+
+            Trip Duration:
+            <br />
+            <input type="text" id="seat" name="seat" defaultValue={props.duration} onChange={event => setDuration(event.target.value)} />
+            <br />
+            
             Departure Terminal:
             <br />
             <input type="number" id="cabin" name="cabin" defaultValue={props.tdep} onChange={event => setTdep(event.target.value)} />
@@ -115,8 +126,12 @@ function UpdateFlight(props) {
             First seats count:
             <br />
             <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
+         
+            <br />
+            Flight Cost:
+            <br />
+            <input type="number" id="cabin" name="cabin" defaultValue={props.cost} onChange={event => setCost(event.target.value)} />
+            
 
             <br />
 

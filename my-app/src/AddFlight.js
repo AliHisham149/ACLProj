@@ -37,7 +37,7 @@ function AddFlightForm(props) {
         FlightCost:flightCost,
       })
         .then(function (response) {
-          console.log("xxx");
+          // console.log("xxx");
         })
       setShow(false);
       setClicked(false);
