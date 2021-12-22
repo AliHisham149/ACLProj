@@ -184,17 +184,19 @@ app.post("/searchFlights",async (req, res) => {
 })
 
 
-app.post('/createReservation',(req,res)=>{
-    const totalCost = req.body.FirstCost + req.body.SecondCost
+app.post('/createReservation',async (req,res)=>{
+    const totalCost = req.body.totalCost
+    const firstFlightID = req.body._id
+    const secondFlightID = req.body._id2
+    
     const reservation1 = new booking({
       //User Data
       Uid: req.body.uid,
       Name:req.body.name,
       Email:req.body.email,
       DateOfBirth:req.body.dob,
-
     //First Flight Data
-      DepartureFlightNumber:req.body.depflightno,
+      DepartureFlightNumber:req.body.depFlightNo,
       DepartureFlightSeats:req.body.depFlightSeats,  //Array of Strings
       FirstFrom:req.body.firstFrom,
       FirstTo:req.body.firstTo,
@@ -214,73 +216,132 @@ app.post('/createReservation',(req,res)=>{
       SecondFlightDate:req.body.secondFlightDate,
       SecondTerminalDeparture:req.body.secondTerminalDep,
       SecondTerminalArrival:req.body.SecondTerminalArr,
+
       SecondArrivalTime:req.body.secondArrTime,
       SecondDepartureTime:req.body.secondDepTime,
       SecondDuration:req.body.secondDuration,
       SecondSeatTypes:req.body.secondSeatTypes,
       SecondCost:req.body.secondCost,
-
-
       TotalPrice: totalCost,
 
 
     })
-    // Remove booked seats from flights' seat maps
+
+    //find flight and 2 
+    //remove them from databse
+    // update them hena 
+    //add them lel db tany
     
-    const deptSeatCount = req.body.DepartureFlightSeats.length
-    const retSeatCount = req.body.ReturnFlightSeats.length
+
+
+    var flight1 = await flight.find({_id:firstFlightID}).then((result)=>{
+        return result;
+    }).catch(err => console.error(`Failed to find document: ${err}`));
+
+
+
+    var flight2 = await flight.find({_id:secondFlightID}).then((result)=>{
+        return result;
+    }).catch(err => console.error(`Failed to find document: ${err}`));
+
+    flight.deleteOne({_id:firstFlightID}).then((result)=>{
+        console.log(result)
+    }).catch(err => console.error(`Failed to find document: ${err}`));
+    
+    flight.deleteOne({_id:secondFlightID}).then((result)=>{
+        console.log(result)
+    }).catch(err => console.error(`Failed to find document: ${err}`));
+
+
+
+    // Remove booked seats from flights' seat maps
+     var deptSeatCount = req.body.depFlightSeats.length
+     var retSeatCount = req.body.retFlightSeats.length
+
+
 
     for (let i = 0; i < deptSeatCount; i++) {
         // Remove seats from seat map of flight
-        flight.find(req.body.DepartureFlightNumber).SeatMap.pop(req.body.DepartureFlightSeats[i])
+        flight1[0]["SeatMap"].pop(req.body.retFlightSeats[i])
 
         // Decrement number of available seats depending on seat type in flight 
         if (req.body.FirstSeatType[i] === "Economy") {
-            flight.find(req.body.DepartureFlightNumber).EconomyClassSeatsCount--
+            flight1[0]['EconomyClassSeatsCount']--
         }
         else if (req.body.FirstSeatType[i]=== "Business") {
-            flight.find(req.body.DepartureFlightNumber).BusinessClassSeatsCount--
+            flight1[0]['BusinessClassSeatsCount']--
         }
         else {
-            flight.find(req.body.DepartureFlightNumber).FirstClassSeatsCount--
+            flight1[0]['FirstClassSeatsCount']--
         }
     }
 
     for (let i = 0; i < retSeatCount; i++) {
         // Remove seats from seat map of flight
-        flight.find(req.body.ReturnFlightNumber).SeatMap.pop(req.body.ReturnFlightSeats[i])
+        flight2[0]["SeatMap"].pop(req.body.retFlightSeats[i])
 
         // Decrement number of available seats depending on seat type in flight 
-        if (req.body.FirstSeatType[i] === "Economy") {
-            flight.find(req.body.ReturnFlightNumber).EconomyClassSeatsCount--
+        if (req.body.secondSeatTypes[i] === "Economy") {
+            flight2[0]['EconomyClassSeatsCount']--
         }
-        else if (req.body.FirstSeatType[i]=== "Business") {
-            flight.find(req.body.ReturnFlightNumber).BusinessClassSeatsCount--
+        else if (req.body.secondSeatTypes[i] === "Business") {
+            flight2[0]['BusinessClassSeatsCount'] --
         }
         else {
-            flight.find(req.body.ReturnFlightNumber).FirstClassSeatsCount--
+            flight2[0]['FirstClassSeatsCount']--
         }
     }
+    
+
+    const newFlight1 = new flight({
+            From: flight1[0]["From"],
+            To: flight1[0]["To"],
+            FlightDate: flight1[0]["FlightDate"],
+            FirstClassSeatsCount:flight1[0]["FirstClassSeatsCount"],
+            BusinessClassSeatsCount:flight1[0]["BusinessClassSeatsCount"],
+            EconomyClassSeatsCount:flight1[0]["EconomyClassSeatsCount"],
+            TerminalDeparture:flight1[0]["TerminalDeparture"],
+            TerminalArrival:flight1[0]["TerminalArrival"],
+            FlightNumber:flight1[0]["FlightNumber"],
+            ArrivalTime:flight1[0]["ArrivalTime"],
+            DepartureTime:flight1[0]["DepartureTime"],
+            FlightCost:flight1[0]["FlightCost"],
+            TripDuration:flight1[0]["TripDuration"],
+            SeatMap:flight1[0]["SeatMap"],
+
+    })
+    const newFlight2 = new flight({
+        From: flight2[0]["From"],
+        To: flight2[0]["To"],
+        FlightDate: flight2[0]["FlightDate"],
+        FirstClassSeatsCount:flight2[0]["FirstClassSeatsCount"],
+        BusinessClassSeatsCount:flight2[0]["BusinessClassSeatsCount"],
+        EconomyClassSeatsCount:flight2[0]["EconomyClassSeatsCount"],
+        TerminalDeparture:flight2[0]["TerminalDeparture"],
+        TerminalArrival:flight2[0]["TerminalArrival"],
+        FlightNumber:flight2[0]["FlightNumber"],
+        ArrivalTime:flight2[0]["ArrivalTime"],
+        DepartureTime:flight2[0]["DepartureTime"],
+        FlightCost:flight2[0]["FlightCost"],
+        TripDuration:flight2[0]["TripDuration"],
+        SeatMap:flight2[0]["SeatMap"],
+
+
+})
+
+
+
+
+    newFlight1.save()
+    newFlight2.save()
     
 
     reservation1.save().then((result) => {
         res.send(result)
 
         //Sending Email to user
-        const msg = {
-            to: req.body.email,
-            from: 'test@example.com', // Use the email address or domain you verified above
-            subject: 'A booking was made with this Email',
-            text: 'you can go to this link to check out your bookings ',
-          };
-          sgMail.send(msg).then(() => {}, error => {
-                    console.error(error);
-
-                if (error.response) {
-                console.error(error.response.body)
-                }
-                console.log("Email sent successfuly ")
-            });
+        
+        
         
     })
         .catch((err) => {
@@ -297,6 +358,8 @@ app.get("/getReservations",(req,res)=>{
         res.send(data)     
     })
 })
+
+
 
 app.get("/createUser",(req,res) =>{
             var today = new Date();

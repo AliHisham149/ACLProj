@@ -17,7 +17,7 @@ const bookingSchema = new Schema({
         required: true,
     },
     DateOfBirth: {
-        type: Date,
+        type: String,
         required: true,
       },
 
