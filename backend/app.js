@@ -19,7 +19,7 @@ var validator  = require('email-validator');
 app.use(cors());
 
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+sgMail.setApiKey('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');
 mongoose = require('mongoose');
 const flight = require('./Models/flights.js')
 const user = require('./Models/users.js')
@@ -340,6 +340,20 @@ app.post('/createReservation',async (req,res)=>{
         res.send(result)
 
         //Sending Email to user
+        const msg = {
+            to: req.body.email,
+            from: 'test@example.com', // Use the email address or domain you verified above
+            subject: 'A booking was made with this Email',
+            text: 'you can go to this link to check out your bookings ',
+          };
+          sgMail.send(msg).then(() => {}, error => {
+                    console.error(error);
+
+                if (error.response) {
+                console.error(error.response.body)
+                }
+                console.log("Email sent successfuly ")
+            });
         
         
         
@@ -380,6 +394,20 @@ app.get("/createUser",(req,res) =>{
 //Functions needed to be implemented 
 
 app.post("/cancelReservation", (req, res) => {
+    const msg = {
+        to: req.body.email,
+        from: 'test@example.com', // Use the email address or domain you verified above
+        subject: 'A booking was cancelled with this Email',
+        text: 'you can go to this link to check out your bookings ',
+      };
+      sgMail.send(msg).then(() => {}, error => {
+                console.error(error);
+
+            if (error.response) {
+            console.error(error.response.body)
+            }
+            console.log("Email sent successfuly ")
+        });
    
     //find booking in bookings
     const bookingID = req.body._id
