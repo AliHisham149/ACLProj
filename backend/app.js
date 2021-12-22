@@ -316,6 +316,8 @@ app.post("/cancelReservation", (req, res) => {
             flight.find(retFlightNo).FirstClassSeatsCount++
         }
     }
+    booking.deleteOne({ _id : req.body._id}).exec(function (err, leads) {
+        res.status(201).send(leads);
+    });
     //Remove booking from bookings
-    booking.remove(bookingID)
    });
