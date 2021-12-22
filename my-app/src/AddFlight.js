@@ -16,7 +16,8 @@ function AddFlightForm(props) {
   const [bs, setBs] = useState("");
   const [first, setFirst] = useState("");
   const [flightNum, setFlightNum] = useState("");
-
+  const [flightCost,setFlightCost] = useState("");
+  const [duration,setFlightDuration] = useState("");
   const [clicked, setClicked] = useState(false);
   useEffect(() => {
     if (clicked) {
@@ -27,11 +28,13 @@ function AddFlightForm(props) {
         FlightDate: date,
         ArrivalTime: arr,
         DepartureTime: dep,
+        FlightDuration: duration,
         TerminalDeparture: tdep,
         TerminalArrival: tarr,
         EconomyClassSeatsCount: ec,
         BusinessClassSeatsCount: bs,
-        FirstClassSeatsCount: first
+        FirstClassSeatsCount: first,
+        FlightCost:flightCost,
       })
         .then(function (response) {
           console.log("xxx");

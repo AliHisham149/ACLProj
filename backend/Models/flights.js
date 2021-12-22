@@ -47,6 +47,18 @@ const flightSchema = new Schema({
         type: String,
         required: true
       },
+      FlightCost:{
+        type:Number,
+        required:true
+      },
+      TripDuration:{
+        type:String,
+        required:true
+      },
+      SeatMap:{
+        type:[String],
+        required:true
+      },
 },
     { timestamps: false });
 

@@ -77,6 +77,21 @@ app.post("/deleteFlights", (req, res) => {
 });
 
 app.post("/addFlight", (req, res) => {
+    var  seatMap = []
+    for(let i=0;i<req.body.FirstClassSeatsCount;i++){
+        seatTemp = 'A' + i;
+        seatMap.push(seatTemp);
+    }
+    for(let i=0;i<req.body.BusinessClassSeatsCount;i++){
+        seatTemp = 'B' + i;
+        seatMap.push(seatTemp);
+    }
+    for(let i=0;i<req.body.EconomyClassSeatsCount;i++){
+        seatTemp = 'C' + i;
+        seatMap.push(seatTemp);
+    }
+   
+
     const newFlight = new flight({
         'From': req.body.From, 
         'To': req.body.To, 
@@ -89,7 +104,10 @@ app.post("/addFlight", (req, res) => {
         'TerminalArrival': req.body.TerminalArrival,
         'FlightNumber':req.body.FlightNumber, 
         'ArrivalTime':req.body.ArrivalTime, 
-        'DepartureTime':req.body.DepartureTime 
+        'DepartureTime':req.body.DepartureTime, 
+        'FlightCost':req.body.FlightCost,
+        'TripDuration':req.body.TripDuration,
+        'SeatMap':seatMap
     
  })
     newFlight.save().then((result) => {
@@ -136,6 +154,7 @@ app.post("/searchFlights",async (req, res) => {
       FirstTerminalArrival:2,
       FirstArrivalTime:"10:40",
       FirstDepartureTime:"9:20",
+      FirstDuration:"1:20",
       FirstSeatType:["Economy","Business"],  //Array of Strings
 
       //Second Flight data
@@ -148,6 +167,7 @@ app.post("/searchFlights",async (req, res) => {
       SecondTerminalArrival:5,
       SecondArrivalTime:"11:55",
       SecondDepartureTime:"10:15",
+      SecondDuration:"1:40",
       SecondSeatTypes:["Economy","Business"],
 
 
@@ -160,6 +180,7 @@ app.post("/searchFlights",async (req, res) => {
 
 
 app.post('/createReservation',(req,res)=>{
+    const totalCost = req.body.FirstCost + req.body.SecondCost
     const reservation1 = new booking({
       //User Data
       Uid: req.body.uid,
@@ -177,8 +198,9 @@ app.post('/createReservation',(req,res)=>{
       FirstTerminalArrival:req.body.FirstTerminalArr,
       FirstArrivalTime:req.body.FirstArrTime,
       FirstDepartureTime:req.body.FirstDepTime,
+      FirstDuration:req.body.FirstDuration,
       FirstSeatType:req.body.FirstSeatType,  //Array of Strings
-
+      FirstCost:req.body.FirstCost,  
       //Second Flight data
       ReturnFlightNumber:req.body.retFlightNumber,
       ReturnFlightSeats:req.body.retFlightSeats,
@@ -189,10 +211,12 @@ app.post('/createReservation',(req,res)=>{
       SecondTerminalArrival:req.body.SecondTerminalArr,
       SecondArrivalTime:req.body.secondArrTime,
       SecondDepartureTime:req.body.secondDepTime,
+      SecondDuration:req.body.secondDuration,
       SecondSeatTypes:req.body.secondSeatTypes,
+      SecondCost:req.body.secondCost,
 
 
-      TotalPrice:req.body.price
+      TotalPrice: totalCost,
 
 
 
