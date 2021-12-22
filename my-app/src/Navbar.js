@@ -3,6 +3,8 @@ import Admin from './Admin';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import User from "./User";
 import SelectedFlight from "./SelectedFlight";
+import Summary from './Summary';
+import ChooseSeats from './ChooseSeats'
 
 const Navbar = () => {
     return(
@@ -11,6 +13,8 @@ const Navbar = () => {
             <h1 className="Website-header" align="center">No Way Home Airlines</h1>
             <div   className="links">
                 <a href="/Login" >Existing User</a>
+                <br/>
+                <a href="/User" >Guest User</a>
                 <br/>
                 <a href="/Admin" >Admin</a>
 
@@ -24,7 +28,10 @@ const Navbar = () => {
             <Route path="/Admin" element={<Admin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/User" element={<User />} />
-            <Route path="/SelectedFlight" element={<SelectedFlight/>} />
+            <Route path="/SelectedFlight" element={<SelectedFlight/>}/>
+            <Route path="/Summary" element={<Summary />} />
+            <Route path="/ChooseSeats" element={<ChooseSeats />} />
+
             
               
         </Routes>

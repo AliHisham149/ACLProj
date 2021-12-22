@@ -35,14 +35,16 @@ function UpdateFlight(props) {
         From: from,
         To: to,
         FlightDate: date,
-
         ArrivalTime: arr,
         DepartureTime: dep,
+        // FlightDuration:duration,
         TerminalDeparture: tdep,
         TerminalArrival: tarr,
         EconomyClassSeatsCount: ec,
         BusinessClassSeatsCount: bs,
-        FirstClassSeatsCount: first
+        FirstClassSeatsCount: first,
+        // FlightCost:cost,
+
       })
         .then(function (response) {
           console.log("xxx");
@@ -112,6 +114,8 @@ function UpdateFlight(props) {
             <br />
             First seats count:
             <br />
+            <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
+            <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
             <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
 
             <br />

@@ -66,23 +66,31 @@ function AddFlightForm(props) {
             <input type="text" id="cabin" name="cabin" onChange={event => setArr(event.target.value)} />
             <br/>
             Arrival Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Duration:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
                 Departure Terminal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Arrival Terminal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Economy Seats Count:
+                
             <br />
             <input type="text" id="seat" name="seat" onChange={event => setDep(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           
             <input type="number" id="cabin" name="cabin" onChange={event => setTdep(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="number" id="cabin" name="cabin" onChange={event => setFlightDuration(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="number" id="cabin" name="cabin" onChange={event => setTarr(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="number" id="cabin" name="cabin" onChange={event => setEc(event.target.value)} />
+
 
 
             <br />
             Business Seats Count:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            First Seats Count:
+            First Seats Count:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            Economy Seats Count:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Total Cost:
             <br />
             <input type="number" id="cabin" name="cabin" onChange={event => setBs(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="number" id="cabin" name="cabin"
-              onChange={event => setFirst(event.target.value)} />
+            <input type="number" id="cabin" name="cabin"  onChange={event => setFirst(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="number" id="cabin" name="cabin" onChange={event => setEc(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="number" id="cabin" name="cabin" onChange={event => setFlightCost(event.target.value)} />
             <br />
             <br />
            

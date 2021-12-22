@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import { Button } from 'react-bootstrap';
 import AddFlightForm from './AddFlight';
 import UpdateFlight from './UpdateFlight';
-import SearchBody from './SearchFlight';
+import UserSearchBody from './UserSearchFlight';
 // import Login from './Login';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
@@ -53,9 +53,9 @@ function User(){
       })
     })
 
-    function handleClick(){
-        navigate("/SelectedFlight");
-    }
+    // function handleClick(){
+    //     navigate("/SelectedFlight");
+    // }
 
 
 
@@ -101,22 +101,9 @@ function User(){
                <StyledTableCell align="center">{u.BusinessClassSeatsCount}</StyledTableCell>
                <StyledTableCell align="center">{u.FirstClassSeatsCount}</StyledTableCell>
 
-               {/* <StyledTableCell align="center"> <UpdateFlight idd={u._id} from={u.From} to={u.To}
-                 flightNum={u.FlightNumber}
-                 date={u.FlightDate}
-                 arr={u.ArrivalTime}
-                 dep={u.DepartureTime}
-                 tdep={u.TerminalDeparture}
-                 tarr={u.TerminalArrival}
-                 ec={u.EconomyClassSeatsCount}
-                 bs={u.BusinessClassSeatsCount}
-                 first={u.FirstClassSeatsCount}
-               /></StyledTableCell> */}
+               
                <StyledTableCell align="center">
-                 {/* <Popup trigger={<Button onClick={handleClick} variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Select</Button>} position="right center"> */}
-                   {/* <div>Are you sure you want to delete?(if no click anywhere)</div> */}
-                   {/* <DeleteFlight idd={u._id}></DeleteFlight> */}
-               {/* </Popup> */}
+                 
                <Button onClick={() =>{navigate("/SelectedFlight");
                 localStorage.setItem("flight",JSON.stringify(u))
                 }}
@@ -129,7 +116,7 @@ function User(){
        </TableContainer>
        <br/>
        <h1 align="center" color="#d89d28">Search for your flight</h1> 
-       <SearchBody></SearchBody>
+       <UserSearchBody></UserSearchBody>
        </div>
 
 )
@@ -137,3 +124,26 @@ function User(){
 }
 
 export default User;
+
+
+
+
+
+
+
+{/* <Popup trigger={<Button onClick={handleClick} variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Select</Button>} position="right center"> */}
+                   {/* <div>Are you sure you want to delete?(if no click anywhere)</div> */}
+                   {/* <DeleteFlight idd={u._id}></DeleteFlight> */}
+               {/* </Popup> */}
+
+               {/* <StyledTableCell align="center"> <UpdateFlight idd={u._id} from={u.From} to={u.To}
+                 flightNum={u.FlightNumber}
+                 date={u.FlightDate}
+                 arr={u.ArrivalTime}
+                 dep={u.DepartureTime}
+                 tdep={u.TerminalDeparture}
+                 tarr={u.TerminalArrival}
+                 ec={u.EconomyClassSeatsCount}
+                 bs={u.BusinessClassSeatsCount}
+                 first={u.FirstClassSeatsCount}
+               /></StyledTableCell> */}

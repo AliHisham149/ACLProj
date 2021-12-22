@@ -13,6 +13,9 @@ import UpdateFlight from './UpdateFlight';
 import DeleteFlight from './DeleteFlight';
 import {Popup} from 'reactjs-popup';
 import Paper from '@mui/material/Paper';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
+import Summary from "./Summary";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -34,14 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-
-
-
-
-
-
-
 function SelectedFlight(){
+    let navigate= useNavigate();
     let F=localStorage.getItem("flight");
     const Flight= JSON.parse(F);
     const [show, setShow] = useState(false);
@@ -60,7 +57,6 @@ function SelectedFlight(){
     const [returnflightlist, setReturnFlightlist] = useState([]);
     const [clicked, setClicked] = useState(false);
     
-    
     useEffect(() => {
         var queryParams = {
           From:to,
@@ -78,44 +74,7 @@ function SelectedFlight(){
 
         <div>
                     <form >
-                    {/* <h1>Selected Flight</h1>
-                    <p align="center">  Flight number: {flightno} , Date: {FD},Departure Time: {departuretime} , Arrival Time: {arrivaltime}, Buisness Seats: {bcsc}, Economy Seats: {ecsc},FirstClass Seats: {fcsc},From: {from},To: {to}, Arrival Terminal: {arrivalterminal}, Departure Terminal: {departureterminal} </p>  
-                    <br/> */}
-
-                {/* Flight Number: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                From:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                To:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-                Date:&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Departure Time:
-                <br />
-
-                <input type="text" id="from" name="from" onChange={event => setFlightNum(event.target.value)} />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" id="from" name="from" onChange={event => setFrom(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" id="to" name="to" onChange={event => setTo(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="date" id="date" name="date" onChange={event => setDate(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" id="seat" name="seat" onChange={event => setDep(event.target.value)} />
-                <br />
-                Arrival Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Departure Terminal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Arrival Terminal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Number of economy seats:
-                <br />
-                <input type="text" id="cabin" name="cabin" onChange={event => setArr(event.target.value)} /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
-                <input type="number" id="cabin" name="cabin" onChange={event => setTdep(event.target.value)} />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-                <input type="number" id="cabin" name="cabin" onChange={event => setTarr(event.target.value)} />&nbsp; &nbsp;&nbsp;&nbsp; 
-                <input type="number" id="cabin" name="cabin" onChange={event => setEc(event.target.value)} />
-               
-
-                <br />
-                Number of Buisness seats: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Number of First seats:
-                <br />
-                <input type="number" id="cabin" name="cabin" onChange={event => setBs(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="number" id="cabin" name="cabin"
-                  onChange={event => setFirst(event.target.value)} />
-                  <br/>
-                <br />
-                <>  */}
+                    
 
                 <TableContainer component={Paper}>
                 
@@ -160,7 +119,46 @@ function SelectedFlight(){
               <StyledTableCell align="center">{u.BusinessClassSeatsCount}</StyledTableCell>
               <StyledTableCell align="center">{u.FirstClassSeatsCount}</StyledTableCell>
 
-              {/* <StyledTableCell align="center"> <UpdateFlight idd={u._id} from={u.From} to={u.To}
+              
+                <StyledTableCell align="center">
+                 <Button onClick={() =>{navigate("/Summary");
+                localStorage.setItem("ReturnFlight",JSON.stringify(u))
+                }} 
+                variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Select</Button>
+                </StyledTableCell>
+
+              </TableRow>
+          })}
+         
+        </Table>
+      </TableContainer>
+            
+            
+
+              </form>
+
+               </div>
+        
+    )
+}
+export default SelectedFlight;
+
+
+ 
+
+
+
+
+
+    //             <div>
+        
+    // <p align="center">  {flightno},{FD},{departuretime} ,{arrivaltime},{bcsc},{ecsc},{fcsc},{from},{to},{arrivalterminal},{departureterminal} </p>
+
+    
+    // </div>
+
+
+    {/* <StyledTableCell align="center"> <UpdateFlight idd={u._id} from={u.From} to={u.To}
                 flightNum={u.FlightNumber}
                 date={u.FlightDate}
                 arr={u.ArrivalTime}
@@ -171,20 +169,9 @@ function SelectedFlight(){
                 bs={u.BusinessClassSeatsCount}
                 first={u.FirstClassSeatsCount}
               /></StyledTableCell> */}
-                <StyledTableCell align="center">
-                {/* <Button onClick={() =>{navigate("/SelectedFlight");
-                localStorage.setItem("flight",JSON.stringify(u))
-                }} */}
-               <Button variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Select</Button>
-                </StyledTableCell>
 
-              </TableRow>
-          })}
-         
-        </Table>
-      </TableContainer>
-            
-            {/* </Modal.Body> */}
+
+              {/* </Modal.Body> */}
             {/* <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 Close
@@ -194,10 +181,44 @@ function SelectedFlight(){
           {/* </Modal> */}
         {/* </> */}
 
-              </form>
 
-               </div>
-        
-    )
-}
-export default SelectedFlight;
+
+
+        {/* <h1>Selected Flight</h1>
+                    <p align="center">  Flight number: {flightno} , Date: {FD},Departure Time: {departuretime} , Arrival Time: {arrivaltime}, Buisness Seats: {bcsc}, Economy Seats: {ecsc},FirstClass Seats: {fcsc},From: {from},To: {to}, Arrival Terminal: {arrivalterminal}, Departure Terminal: {departureterminal} </p>  
+                    <br/> */}
+
+                {/* Flight Number: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                From:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                To:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                Date:&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Departure Time:
+                <br />
+
+                <input type="text" id="from" name="from" onChange={event => setFlightNum(event.target.value)} />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" id="from" name="from" onChange={event => setFrom(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" id="to" name="to" onChange={event => setTo(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="date" id="date" name="date" onChange={event => setDate(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" id="seat" name="seat" onChange={event => setDep(event.target.value)} />
+                <br />
+                Arrival Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Departure Terminal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Arrival Terminal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Number of economy seats:
+                <br />
+                <input type="text" id="cabin" name="cabin" onChange={event => setArr(event.target.value)} /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
+                <input type="number" id="cabin" name="cabin" onChange={event => setTdep(event.target.value)} />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                <input type="number" id="cabin" name="cabin" onChange={event => setTarr(event.target.value)} />&nbsp; &nbsp;&nbsp;&nbsp; 
+                <input type="number" id="cabin" name="cabin" onChange={event => setEc(event.target.value)} />
+               
+
+                <br />
+                Number of Buisness seats: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Number of First seats:
+                <br />
+                <input type="number" id="cabin" name="cabin" onChange={event => setBs(event.target.value)} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="number" id="cabin" name="cabin"
+                  onChange={event => setFirst(event.target.value)} />
+                  <br/>
+                <br />
+                <>  */}

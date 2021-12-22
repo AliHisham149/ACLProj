@@ -78,15 +78,15 @@ app.post("/deleteFlights", (req, res) => {
 
 app.post("/addFlight", (req, res) => {
     var  seatMap = []
-    for(let i=0;i<req.body.FirstClassSeatsCount;i++){
+    for(let i=1;i<req.body.FirstClassSeatsCount+1;i++){
         seatTemp = 'A' + i;
         seatMap.push(seatTemp);
     }
-    for(let i=0;i<req.body.BusinessClassSeatsCount;i++){
+    for(let i=1;i<req.body.BusinessClassSeatsCount+1;i++){
         seatTemp = 'B' + i;
         seatMap.push(seatTemp);
     }
-    for(let i=0;i<req.body.EconomyClassSeatsCount;i++){
+    for(let i=1;i<req.body.EconomyClassSeatsCount+1;i++){
         seatTemp = 'C' + i;
         seatMap.push(seatTemp);
     }
@@ -106,7 +106,7 @@ app.post("/addFlight", (req, res) => {
         'ArrivalTime':req.body.ArrivalTime, 
         'DepartureTime':req.body.DepartureTime, 
         'FlightCost':req.body.FlightCost,
-        'TripDuration':req.body.TripDuration,
+        'TripDuration':req.body.FlightDuration,
         'SeatMap':seatMap
     
  })
