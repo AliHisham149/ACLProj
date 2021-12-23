@@ -188,7 +188,7 @@ app.post('/createReservation',async (req,res)=>{
     const totalCost = req.body.totalCost
     const firstFlightID = req.body._id
     const secondFlightID = req.body._id2
-    
+    console.log(req.body)
     const reservation1 = new booking({
       //User Data
       Uid: req.body.uid,

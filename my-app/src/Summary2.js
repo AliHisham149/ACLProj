@@ -81,11 +81,14 @@ function Summary2(){
     const chosenRT = ChosenReturnTypes.split(',')
     const totalCost = RFCost + FCost;
     let user = localStorage.getItem("User")
+    const [clicked, setClicked] = useState(false);
+  const [show, setShow] = useState(false);
+
 
     // const 
     const addFlightObject = {
-        "._id":Flight._id,
-        "._id2":RFlight._id,
+        '._id':Flight._id,
+        '._id2':RFlight._id,
         "Uid":"fd5c54aa-3371-4f29-8b39-9f60e6931a9d",
         "Name":"Aly",
         "Email":"aly@gmail.com",
@@ -124,6 +127,17 @@ function Summary2(){
 
 
     }
+    useEffect(() => {
+        if (clicked) {
+          axios.post('http://localhost:8080/createReservation', addFlightObject)
+            .then(function (response) {
+              // console.log("xxx");
+            })
+          setShow(false);
+          setClicked(false);
+        }
+    
+      })
 
     return(
         <div>
@@ -142,8 +156,10 @@ function Summary2(){
                     
 
                     <StyledTableCell align="center">
-                 <Button 
+ 
+                 <Button onClick={(event) => setClicked(true)}
                 variant="outline-danger" data-target="#myModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Confirm Booking</Button>
+                
                 </StyledTableCell>
 
 
