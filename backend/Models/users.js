@@ -6,11 +6,35 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    Name: {
+    FirstName: {
+        type: String,
+        required: true,
+    },
+    LastName: {
+        type: String,
+        required: true,
+    },
+    Username: {
+        type: String,
+        required: true,
+    },
+    Address: {
+        type: String,
+        required: true,
+    },
+    CountryCode: {
+        type: String,
+        required: true,
+    },
+    PassportNo: {
         type: String,
         required: true,
     },
     Email: {
+        type: String,
+        required: true,
+    },
+    PhoneNumber: {
         type: String,
         required: true,
     },

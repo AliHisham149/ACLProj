@@ -11,6 +11,8 @@ import Itinerary from './itinerary';
 import Profile from './Profile';
 import ChooseSeats from './ChooseSeats'
 import Summary2 from './Summary2'
+import GuestUser from "./GuestUser"
+import Signup from "./Signup"
 
 const Navbar = () => {
     return(
@@ -23,7 +25,7 @@ const Navbar = () => {
             }} href="/Login" >Login</a>
             <br/>
             <a onClick={()=>{
-                localStorage.setItem("loggedin",false);}}href="/User" >Guest </a>
+                localStorage.setItem("loggedin",false);}}href="/GuestUser" >Guest </a>
             <br/>
             <a  href="/Admin" >Admin</a>
 
@@ -37,6 +39,10 @@ const Navbar = () => {
             <Route path="/Admin" element={<Admin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/User" element={<User />} />
+            <Route path="/Signup" element={<Signup />} />
+
+            <Route path="/GuestUser" element={<GuestUser />} />
+
             <Route path="/SelectedFlight" element={<SelectedFlight/>}/>
             <Route path="/Summary" element={<Summary />} />
             <Route path="/ChooseSeats" element={<ChooseSeats />} />
@@ -44,6 +50,7 @@ const Navbar = () => {
             <Route path= "/Landing" element={<Landing/>}/>
             <Route path= "/itinerary" element={<Itinerary/>}/>
             <Route path="/Profile" element={<Profile/>}/>
+           
 
 
 

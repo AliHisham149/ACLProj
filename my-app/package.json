@@ -11,7 +11,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@material-ui/icons": "^4.11.2",
-    "@mui/material": "^5.0.6",
+    "@mui/material": "^5.2.8",
     "@mui/styles": "^5.0.2",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
@@ -29,7 +29,10 @@
     "reactjs-popup": "^2.0.5",
     "stack": "^0.1.0",
     "textfield": "^1.0.4",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "@material-ui/pickers": "^3.3.10",
+    "@mui/icons-material": "^5.2.0",
+    "@mui/lab": "^5.0.0-alpha.57"
   },
   "scripts": {
     "start": "react-scripts start",

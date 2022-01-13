@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const bookingSchema = new Schema({
+const reservationSchema = new Schema({
     
     //User Data
     Uid: {
@@ -132,14 +132,7 @@ const bookingSchema = new Schema({
           type:Number,
         required:true
       },
-
-
-
-
-
-
-
-      //Price Of Booking (Both flights combined)
+      //Price Of reservation (Both flights combined)
     TotalPrice: {
         type: Number,
         required: true,
@@ -147,5 +140,5 @@ const bookingSchema = new Schema({
 },
     { timestamps: false });
 
-const booking = mongoose.model('bookings', bookingSchema);
-module.exports = booking;
+const reservation = mongoose.model('reservations', reservationSchema);
+module.exports = reservation;
