@@ -35,6 +35,7 @@ We used standard code style .
 - React-scripts
 - Stripe
 - nodemailer
+- MUI 
 
 ### Features:
 When user confirms his booking , A summary with all details of his trip are shown to him including whole price for the trip.
