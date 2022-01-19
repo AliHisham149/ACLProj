@@ -38,15 +38,7 @@ const NavBar = () => {
     <AppBar position="fixed" style={{ width: window.screen.width }}>
       <Container maxWidth="xl" style={{ marginLeft: 20 }}>
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            BSB Airways
-          </Typography>
-
+         
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} style={{ marginLeft: 20 }}>
             <IconButton
               size="large"
@@ -83,14 +75,7 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            BSB Airways
-          </Typography>
+        
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} style={{ marginLeft: -20 }}>
             {pages.map((page) => (
               <Button

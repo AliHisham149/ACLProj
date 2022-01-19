@@ -29,81 +29,26 @@ import Icon from '@mui/material/Icon';
 import { Button, Card } from 'react-bootstrap';
 import AddFlightForm from './AddFlightForm';
 import UpdateFlight from './UpdateFlight';
-import Search from './Search';
-import SearchBody from './SearchBody';
-import ShowMap from './ShowMap';
-import Logout from './Logout';
-import App from './App';
 
-
-import { Grid } from '@material-ui/core';
 import Box from '@mui/material/Box';
 
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-import Typography from '@mui/material/Typography';
-
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import SearchIcon from '@mui/icons-material/Search';
-import FlightIcon from '@mui/icons-material/Flight';
 import { Stack } from 'react-bootstrap';
-import Layout from './Layout';
-import { MenuItem, Menu } from '@material-ui/core';
 
 import { AppBar } from '@mui/material';
 import { Container } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
-import Luggage from '@mui/icons-material/Luggage';
-import UpgradeIcon from '@mui/icons-material/Upgrade';
-import RoomServiceIcon from '@mui/icons-material/RoomService';
-import HotelIcon from '@mui/icons-material/Hotel';
-import CarRentalIcon from '@mui/icons-material/CarRental';
-import GroupsIcon from '@mui/icons-material/Groups';
-import Groups from '@mui/icons-material/Groups';
-import PeopleIcon from '@mui/icons-material/People';
-import CardTravelIcon from '@mui/icons-material/CardTravel';
-import SchoolIcon from '@mui/icons-material/School';
-import LuggageIcon from '@mui/icons-material/Luggage';
-import Avatar from '@mui/material/Avatar';
-
-import Tooltip from '@mui/material/Tooltip';
 
 import IconButton from '@mui/material/IconButton';
-import { blue } from '@material-ui/core/colors';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Navigation from './Navigation';
-import isWeekend from 'date-fns/isWeekend';
+
 import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import StaticDatePicker from '@mui/lab/StaticDatePicker';
+
 import { useNavigate } from 'react-router-dom';
-import { VectorMap } from '@south-paw/react-vector-maps';
 
-import CircularProgress from '@mui/material/CircularProgress';
-import PersonIcon from '@mui/icons-material/Person';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
-import { Line } from 'react-chartjs-2';
-import { Pie, Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js'
 
-import MobileStepper from '@mui/material/MobileStepper';
 
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { useTheme } from '@mui/material/styles';
@@ -111,15 +56,7 @@ import SearchResults from './SearchResults';
 // import { StyleSheet, View } from 'react-native';
 // import WeatherChart from 'react-native-weather-chart';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import {
-  ArgumentAxis,
-  ValueAxis,
 
-  LineSeries,
-  SplineSeries,
-} from '@devexpress/dx-react-chart-material-ui';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 Chart.register(ArcElement);
 
 

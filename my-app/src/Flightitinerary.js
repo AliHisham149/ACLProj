@@ -420,14 +420,7 @@ function Flightitinerary(props) {
                                     }}
                                 >
                                     <CardContent>
-                                        <Typography
-                                            style={{ fontSize: 35, fontWeight: "bold", marginTop: -10 }}
-                                            color="textPrimary"
-                                            align="left"
-                                            gutterBottom
-                                        >
-                                            BSB Airways
-                                        </Typography>
+                                     
 
                                         <Typography
                                             style={{ fontSize: 25, fontWeight: "bold" }}

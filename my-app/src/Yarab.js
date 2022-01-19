@@ -1,14 +1,5 @@
 import React from 'react'
-import { ModalFooter } from 'react-bootstrap';
 import './flightseatmap.css';
-import Checkbox from '@mui/material/Checkbox';
-import App from './App';
-import Summary from './Summary'
-import EditProfile from './EditProfile';
-import Layout from './Layout';
-import { CssBaseline } from '@mui/material';
-import { Container } from '@material-ui/core';
-import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import { TableHead } from '@material-ui/core';
 import { Paper } from '@mui/material';
@@ -20,9 +11,7 @@ import { Table } from '@material-ui/core';
 import { TableCell } from '@mui/material';
 import { tableCellClasses } from '@mui/material';
 import { Button } from '@material-ui/core';
-import { Stack } from 'react-bootstrap';
-import { Snackbar } from '@mui/material';
-import { Alert } from 'react-bootstrap';
+
 //import { useState } from 'react';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
