@@ -7,7 +7,6 @@ import CardActions from "@material-ui/core/CardActions";
 import { FaPlaneDeparture } from "react-icons/fa"
 import { FaPlaneArrival } from "react-icons/fa"
 import { IconContext } from "react-icons"
-import flight from "./images/flight.png"
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { useState, useEffect } from 'react';

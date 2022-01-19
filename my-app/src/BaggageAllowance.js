@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import flight from "./images/flight.png";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -19,9 +18,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import BSBlogo from './images/BSBlogo.png'
 import Typography from '@mui/material/Typography';
-import booktrip from "./images/booktrip.jpg"
 import { blue } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@mui/material/Paper';
@@ -99,7 +96,6 @@ import { Link } from '@mui/material';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import baggageee from './images/baggageee.jpg'
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -378,7 +374,7 @@ function BaggageAllowance() {
                     align="left"
                     gutterBottom
                 >
-                    <Link style={{ color: '#5c0931' }} href="#" onClick={() => navigate("/Search")}>Home</Link> > Buy gifts or transfer miles
+                    <Link style={{ color: '#5c0931' }} href="#" onClick={() => navigate("/Search")}>Home</Link>  Buy gifts or transfer miles
                     <hr style={{ fontSize: 20, fontWeight: "bold", marginLeft: 50, color: ' #5c0931', marginLeft: 0 }} />
                 </Typography>
 

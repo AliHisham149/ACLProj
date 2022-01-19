@@ -1,6 +1,5 @@
 import React from 'react'
 //import { useLocation } from 'react-router-dom'
-import plane from './images/planeOutline.jpeg'
 import { Image } from 'react-bootstrap'
 import Button from '@mui/material/Button'
 import axios from 'axios'

@@ -29,16 +29,11 @@ import ReturnFlight from './ReturnFlight';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/Select';
-import BerlinPic from './images/BerlinPic.jpg'
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import search from './images/search.jpg'
-import cappadocia from './images/cappadocia.jpg'
 import { ButtonGroup } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import homepage from './images/homepage.jpg'
 import { Card } from 'react-bootstrap';
-import homepagee from './images/homepagee.jpg'
 import { useTheme } from '@mui/material/styles';
 
 import MobileStepper from '@mui/material/MobileStepper';

@@ -1,5 +1,4 @@
 import React from 'react'
-import lounges from './images/lounges.jpg'
 import { Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
@@ -28,7 +27,6 @@ import Wifi from '@mui/icons-material/Wifi';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Container } from '@material-ui/core';
-import logo from './images/logo.png'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';

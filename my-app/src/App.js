@@ -4,7 +4,6 @@ import React from 'react'
 import Admin from './Admin';
 import { Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import flight from "./images/flight.png"
 import {
     MDBNavbar,
     MDBNavbarNav,

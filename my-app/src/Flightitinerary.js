@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import flight from "./images/flight.png"
 import { FaPlaneDeparture } from "react-icons/fa"
 import { FaPlaneArrival } from "react-icons/fa"
 import Card from "@material-ui/core/Card";

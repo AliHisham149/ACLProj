@@ -1,6 +1,5 @@
 import React from 'react'
 //import { useLocation } from 'react-router-dom'
-import planeOutline from './images/planeOutline.jpeg'
 import { Image } from 'react-bootstrap'
 import Button from '@mui/material/Button'
 import axios from 'axios'
@@ -10,7 +9,6 @@ import { Snackbar, Alert } from '@mui/material'
 import FlightIcon from '@mui/icons-material/Flight';
 import AirplanemodeInactive from '@mui/icons-material/AirplanemodeInactive'
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
-import flightpic from './images/flightpic.jpg'
 import { Paper } from '@mui/material'
 import { Typography } from '@mui/material'
 

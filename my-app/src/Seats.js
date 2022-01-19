@@ -1,6 +1,5 @@
 import React from 'react'
 //import { useLocation } from 'react-router-dom'
-//import plane from './images/planeOutline.jpeg'
 import { Image } from 'react-bootstrap'
 import Button from '@mui/material/Button'
 import axios from 'axios'
@@ -9,10 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Snackbar, Alert, Typography } from '@mui/material'
 import AirplanemodeActive from '@mui/icons-material/AirplanemodeActive'
 //import ReturnSeats from './ReturnSeats'
-import plane from './images/plane.png'
-import flightpic from './images/flightpic.jpg'
-import seats from './images/seats.png'
-import planeOutline from './images/planeOutline.jpeg'
 import { Paper } from '@mui/material';
 
 export default function Seats() {

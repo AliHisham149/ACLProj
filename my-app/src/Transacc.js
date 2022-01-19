@@ -9,20 +9,11 @@ import Box from '@mui/material/Box';
 import { Button } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { useLocation, useNavigate } from 'react-router-dom'
-import trasnit from './images/trasnit.jpg'
 function Transacc() {
   const navigate = useNavigate();
   return (
 
-    <div
-      id='intro-example'
-      className='p-5 text-center bg-image'
-      style={{
-        marginTop: -300,
-
-        background: `url(${trasnit})`, backgroundSize: "contain", backgroundRepeat: "repeat", height: 600, width: window.screen.width
-      }}
-    >
+    <div>
       <div>
         <Typography style={{ fontSize: 35, fontFamily: 'Verdana', marginTop: 270, color: 'white', marginLeft: 70, fontWeight: 'bold' }}
 

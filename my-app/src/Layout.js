@@ -1,5 +1,4 @@
 import React from 'react'
-import flight from "./images/flight.png"
 function Layout(props) {
     return (
         <div>
@@ -7,9 +6,7 @@ function Layout(props) {
             <div
                     id='intro-example'
                     className='p-5 text-center bg-image'
-                    style={{
-                        background: `url(${flight})`, backgroundSize: "contain", backgroundRepeat: "no-repeat", height: window.screen.height, width: window.screen.width
-                    }}
+                   
                    
 
                 >

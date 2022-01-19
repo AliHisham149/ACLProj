@@ -11,7 +11,6 @@ import { Box, Fade, Backdrop, Typography, Modal } from '@mui/material';
 import { Link, BrowserRouter, useNavigate, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 // import ChosenSummary from './ChosenSummary'
 import Button from '@mui/material/Button';
-import flightpic from './images/flightpic.jpg'
 
 
 function findArrayElementByTitle(array, id) {

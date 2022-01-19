@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import flight from "./images/flight.png";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -19,10 +18,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import BSBlogo from './images/BSBlogo.png'
 import Typography from '@mui/material/Typography';
 
-import booktrip from "./images/booktrip.jpg"
 import { blue } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@mui/material/Paper';
