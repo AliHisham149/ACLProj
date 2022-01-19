@@ -12,7 +12,6 @@ import SearchMain from './SearchMain';
 import User from './User';
 import LoginPage from './LoginPage';
 import CreateAccount from './CreateAccount';
-import BaggageAllowance from './BaggageAllowance';
 import Admin from './Admin';
 import Transacc from './Transacc';
 import HomePage from './HomePage';

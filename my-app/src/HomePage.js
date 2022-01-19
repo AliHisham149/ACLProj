@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Navigation from './Navigation';
 import LoginPage from './LoginPage';
-import BaggageAllowance from './BaggageAllowance';
 import Transacc from './Transacc';
 import CreateAccount from './CreateAccount';
 import Admin from './Admin';
@@ -40,7 +39,6 @@ function HomePage() {
                 <Routes>
                      <Route path='/' element={<SearchMain />}> </Route>
                    
-                    <Route path='/BaggageAllowance' element={<BaggageAllowance />}> </Route>
                     <Route path='/Transacc' element={<Transacc />}> </Route>
                     <Route path='/SignUp' element={<CreateAccount />}> </Route>
                     <Route path='/Login' element={<LoginPage />}> </Route>
