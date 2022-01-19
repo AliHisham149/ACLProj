@@ -58,41 +58,26 @@ function EditProfile() {
 
     }
     return (
-        <div>
+        <div style={{marginLeft:-400}}>
 
             <div
 
                 id='intro-example'
                 className='p-5 text-center bg-image'
                 style={{
-                    background: `url('https://www.puredestinations.co.uk/wp-content/uploads/2016/06/header-Qatar-Airways-introduces-Dreamliner-aircraft-to-Birmingham-International-Airport--1600x500.jpg')`, backgroundSize: "contain", backgroundRepeat: "no-repeat", height: 600, width: window.screen.width,
-                    marginTop: 430,
-
                 }}
 
 
             >
 
-                <Typography style={{ fontSize: 20, fontWeight: "bold", marginTop: 450, marginLeft: 50, color: ' #161342' }}
-
-                    align="left"
-                    gutterBottom
-                >
-                    <Link style={{ color: '#161342' }} color='#161342' href="#" onClick={() => navigate("/UserProfile",{state:{id:id}})}>Profile</Link> >  Edit your profile
-
-                </Typography>
             </div>
-
-            <hr style={{ fontSize: 20, fontWeight: "bold", marginLeft: 50, color: ' #161342', marginTop: -50 }} />
-
-
             <Card
                 style={{
                     width: 700,
                     height: 80,
                     marginLeft: 400,
                     marginTop: 0,
-                    backgroundColor: ' #161342', opacity: 0.8
+                    backgroundColor: ' #161342', opacity: 1
                 }}
             >
                 <CardContent>
@@ -147,8 +132,7 @@ function EditProfile() {
                         gutterBottom
                     >
 
-
-                        Last name
+               Last name
                     </Typography>
 
                     <TextField style={{ marginLeft: 300, marginTop: 20, width: 250 }} id="outlined-basic" label=" " variant="outlined" onChange={event => setLastName(event.target.value)} />

@@ -283,7 +283,7 @@ function AppBarr() {
         
                 <Stack direction="row" spacing={6} style={{ marginLeft: 200 }}>
                     <h1 style={{color:"white"}}> &nbsp; &nbsp;&nbsp;&nbsp; NO WAY HOME AIRLINES</h1>
-                    <Box style={{ marginLeft: 300 }} >
+                    <Box style={{ marginLeft: 200 }} >
                         <h5 style={{marginTop:15,color:"white"}}>Welcome {loggedInUserName}</h5>
                     </Box>
                     <Box>
@@ -303,6 +303,12 @@ function AppBarr() {
                                         }}>
                                            
                                             View Reservations
+                                        </Button>
+                                        <Button style={{color:"white",marginTop:10}}variant="outlined" onClick={() => {
+                                            navigate("/EditProfile",{state:id})
+                                        }}>
+                                           
+                                            Edit info
                                         </Button>
                     </Box>
                 </Stack>
