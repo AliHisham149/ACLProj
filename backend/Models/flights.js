@@ -14,15 +14,15 @@ const flightSchema = new Schema({
         type: Date,
         required: true,
     },
-    FirstClassSeatsCount: {
+    NuofAvailableFirstSeats: {
         type: Number,
         required: true,
       },
-      BusinessClassSeatsCount: {
+    NuofAvailableBuisnessSeats: {
         type: Number,
         required: true,
       },
-      EconomyClassSeatsCount: {
+    NuofAvailableEconomySeats: {
         type: Number,
         required: true,
       },
@@ -35,7 +35,7 @@ const flightSchema = new Schema({
         required: true,
     
       },
-     FlightNumber: {
+     FlightNu: {
         type: String,
         required: true
       },
@@ -47,24 +47,34 @@ const flightSchema = new Schema({
         type: String,
         required: true
       },
-      FlightCost:{
-        type:Number,
-        required:true
+      EcoPrice: {
+        type: Number,
+        required: true
+      },
+      BusPrice: {
+        type: Number,
+        required: true
+      },
+      FPrice: {
+        type: Number,
+        required: true
+      },
+
+      DepartBool: {
+        type: Boolean,
+        required:false
+      },
+      ReturnBool:{
+        type:Boolean,
+        required:false
       },
       TripDuration:{
         type:String,
         required:true
-      },
-      SeatMap:{
-        type:[String],
-        required:true
-      },
+      }
+
 },
     { timestamps: false });
 
 const flight = mongoose.model('flights', flightSchema);
 module.exports = flight;
-
-//We need to add to this schema (cost)
-//Array fe kol el seats (Most probably haykon sabet like [A1,B1,C1,etc...]) and it gets initialized lwahdo when creating a flight
-//Asked yehia about trip duration and baggage allowance and waiting for his answer so we know how to update it 

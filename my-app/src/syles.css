@@ -1,0 +1,32 @@
+.ChooseSeat {
+    font-family: sans-serif;
+    text-align: center;
+    color: gray;
+  }
+  
+  .seat {
+    background-color: blue;
+  }
+  
+  .seat--reserved {
+    background-color: gray;
+  }
+  
+  .seat--selected {
+    background-color: blue;
+  }
+  
+  .seat-picker {
+    margin: auto;
+  }
+  
+  .seat-picker__row {
+  }
+  
+  .seat-picker__row__number {
+  }
+  
+  div.blank {
+    display: none;
+  }
+  

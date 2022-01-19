@@ -1,8 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal'
-import { Button } from 'react-bootstrap';
+import ModalDialog from 'react-bootstrap/ModalDialog'
+import ModalHeader from 'react-bootstrap/ModalHeader'
+import ModalBody from 'react-bootstrap/ModalBody'
+import ModalFooter from 'react-bootstrap/ModalFooter'
+import { Button, Tooltip } from 'react-bootstrap';
 import axios from 'axios';
+import { IconButton, TextField } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 function UpdateFlight(props) {
   const [show, setShow] = useState(false);
@@ -20,13 +27,11 @@ function UpdateFlight(props) {
   const [ec, setEc] = useState(props.ec);
   const [bs, setBs] = useState(props.bs);
   const [first, setFirst] = useState(props.first);
-  const [cost, setCost] = useState(props.cost);
-  const [duration, setDuration] = useState(props.duration);
-  // const [seatMap,setSeatMap] = useState(props.seatMap);
-  const seatMap = props.seatMap;
-
-
-
+  const [ecPrice, setEcPrice] = useState(props.ecPrice);
+  const [bsPrice, setBsPrice] = useState(props.bsPrice);
+  const [firstPrice, setFirstPrice] = useState(props.firstPrice);
+  const [tripDuration, setTripDuration] = useState(props.tripDuration);
+  const [error, setError] = useState("");
 
 
   const [clicked, setClicked] = useState(false);
@@ -38,33 +43,40 @@ function UpdateFlight(props) {
         From: from,
         To: to,
         FlightDate: date,
+
         ArrivalTime: arr,
         DepartureTime: dep,
-        FlightDuration:duration,
         TerminalDeparture: tdep,
         TerminalArrival: tarr,
-        EconomyClassSeatsCount: ec,
-        BusinessClassSeatsCount: bs,
-        FirstClassSeatsCount: first,
-        FlightCost:cost,
-        seatMap:seatMap,
-
+        NuofAvailableEconomySeats: ec,
+        NuofAvailableBuisnessSeats: bs,
+        NuofAvailableFirstSeats: first,
+        EcoPrice: ecPrice,
+        BusPrice: bsPrice,
+        FPrice: firstPrice,
+        TripDuration: tripDuration
       })
         .then(function (response) {
-          // console.log("xxx");
-        })
-      setShow(false);
+          console.log("xxx");
+          setShow(false);
+        }).catch(error => {
+          console.log(error.response)
+          setError(error.response.data);
+        });
+
       setClicked(false);
     }
 
+    //.catch(err => {console.log(err)});
   })
   return (
     <>
-      <Button variant="outline-primary" onClick={handleShow}> Update</Button>
 
-      <Modal show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Flight Number:{props.flightNum}</Modal.Title>
+      <IconButton size="small" onClick={handleShow}> <EditIcon /></IconButton>
+
+      <Modal show={show} onHide={handleClose} animation={false} style={{ height: 500, marginTop: 150 }}>
+        <Modal.Header style={{ marginTop: '20', backgroundColor: '#e0dfdf' }} closeButton>
+          <Modal.Title style={{ color: '#161342' }}>Flight Number:{props.flightNum}</Modal.Title>
         </Modal.Header>
         <Modal.Body> <div border="solid">
 
@@ -73,77 +85,189 @@ function UpdateFlight(props) {
 
           <form >
 
-            From:
-            <br />
-
-            <input type="text" id="from" name="from" defaultValue={props.from} onChange={event => setFrom(event.target.value)} />
-            <br />
-            To:
-            <br />
-            <input type="text" id="to" name="to" defaultValue={props.to} onChange={event => setTo(event.target.value)} />
-            <br />
-            Date:
-            <br />
-            <input type="date" id="date" name="date" defaultValue={props.date} onChange={event => setDate(event.target.value)} />
-            <br />
-
-            ArrivalTime:
-            <br />
-            <input type="text" id="cabin" name="cabin" defaultValue={props.arr} onChange={event => setArr(event.target.value)} />
 
             <br />
-            Departure Time:
-            <br />
-            <input type="text" id="seat" name="seat" defaultValue={props.dep} onChange={event => setDep(event.target.value)} />
-            <br />
-        
+            <TextField
 
-            Trip Duration:
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="Departure Airport"
+              defaultValue={props.from}
+              onChange={event => setFrom(event.target.value)}
+            />
+
+
+            <TextField
+
+              required
+              id="outlined-size-small"
+              style={{ marginLeft: 15 }}
+              size="small"
+              label="Arrival Airport"
+              defaultValue={props.to}
+              onChange={event => setTo(event.target.value)}
+            />
+
             <br />
-            <input type="text" id="seat" name="seat" defaultValue={props.duration} onChange={event => setDuration(event.target.value)} />
+
             <br />
+            <TextField
+
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="Date"
+              defaultValue={props.date}
+              onChange={event => setDate(event.target.value)}
+            />
+
+            <TextField
+
+              required
+              id="outlined-size-small"
+              style={{ marginLeft: 15 }}
+              size="small"
+              label="Departure time"
+              defaultValue={props.dep}
+              onChange={event => setDep(event.target.value)}
+            />
+
+
+            <br />
+
+            <br />
+            <TextField
+
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="Arrival time"
+              defaultValue={props.arr}
+              onChange={event => setArr(event.target.value)}
+            />
+
+            <TextField
+
+              required
+              id="outlined-size-small"
+              style={{ marginLeft: 15 }}
+              size="small"
+              label="Departure Terminal"
+              defaultValue={props.tdep}
+
+              onChange={event => setTdep(event.target.value)}
+            />
+
+            <br />
+
+            <br />
+            <TextField
+
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="Arrival Terminal"
+              defaultValue={props.tarr}
+              onChange={event => setTarr(event.target.value)}
+            />
+
+
+            <TextField
+
+              required
+              id="outlined-size-small"
+              style={{ marginLeft: 15 }}
+              size="small"
+              label="Economy Seats"
+              defaultValue={props.ec}
+              onChange={event => setEc(event.target.value)}
+            />
+
+
+            <br />
+
+            <br />
+            <TextField
+
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="Economy Seats Price"
+              defaultValue={props.ecPrice}
+              onChange={event => setEcPrice(event.target.value)}
+            />
+
+            <TextField
+
+              required
+              id="outlined-size-small"
+              style={{ marginLeft: 15 }}
+              size="small"
+              label="Business Seats"
+              defaultValue={props.bs}
+              onChange={event => setBs(event.target.value)}
+            />
+
+
+            <br />
+            <br />
+            <TextField
+
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="Business Seats Price"
+              defaultValue={props.bsPrice}
+              onChange={event => setBsPrice(event.target.value)}
+            />
+
+
+            <TextField
+
+              required
+              id="outlined-size-small"
+              style={{ marginLeft: 15 }}
+              size="small"
+              label="First Class Seats"
+              defaultValue={props.first}
+              onChange={event => setFirst(event.target.value)}
+            />
+
+
+            <br />
+
+            <br />
+            <TextField
+
+              required
+              id="outlined-size-small"
+
+              size="small"
+              label="First Class Seats Price"
+              defaultValue={props.firstPrice}
+              onChange={event => setFirstPrice(event.target.value)}
+            />
+
+
             
-            Departure Terminal:
             <br />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.tdep} onChange={event => setTdep(event.target.value)} />
-
-            <br />
-            Arrival Terminal:
-            <br />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.tarr} onChange={event => setTarr(event.target.value)} />
-
-            <br />
-            Economy seats count:
-            <br />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.ec} onChange={event => setEc(event.target.value)} />
-
-            <br />
-            Business seats count:
-            <br />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.bs} onChange={event => setBs(event.target.value)} />
-
-            <br />
-            First seats count:
-            <br />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.first} onChange={event => setFirst(event.target.value)} />
-         
-            <br />
-            Flight Cost:
-            <br />
-            <input type="number" id="cabin" name="cabin" defaultValue={props.cost} onChange={event => setCost(event.target.value)} />
-            
-
-            <br />
-
-            <br />
-
+            <p style={{ color: 'red' }}>
+              {error}
+            </p>
           </form>
         </div></Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer position="fixed" style={{ marginTop: 10, backgroundColor: '#e0dfdf' }}>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(event) => setClicked(true)}>
+          <Button style={{ backgroundColor: '#161342', color: 'white' }} onClick={(event) => setClicked(true)}>
             Save Changes
           </Button>
         </Modal.Footer>

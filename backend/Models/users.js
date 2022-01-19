@@ -1,53 +1,37 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
-    Uid: {
+const existingUserSchema = new Schema({
+    username: {
         type: String,
         required: true,
+        unique: true
     },
-    FirstName: {
+    password: {
         type: String,
-        required: true,
+        required: true
     },
-    LastName: {
+
+    firstName: {
         type: String,
-        required: true,
+        required: true
     },
-    Username: {
+    lastName: {
         type: String,
-        required: true,
+        required: true
     },
-    Address: {
+    passport: {
         type: String,
         required: true,
+        unique: true
     },
-    CountryCode: {
+    email: {
         type: String,
         required: true,
-    },
-    PassportNo: {
-        type: String,
-        required: true,
-    },
-    Email: {
-        type: String,
-        required: true,
-    },
-    PhoneNumber: {
-        type: String,
-        required: true,
-    },
-    Password: {
-        type: String,
-        required: true,
-      },
-    DateOfBirth: {
-        type: String,
-        required: true,
-      },
+        unique: true
+    }
 },
     { timestamps: false });
 
-const user = mongoose.model('users', userSchema);
-module.exports = user;
+const existingUsers = mongoose.model('existingUsers', existingUserSchema);
+module.exports = existingUsers

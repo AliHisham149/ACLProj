@@ -1,0 +1,8 @@
+.footer--pin {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    background-color: #161842;
+    color:'white';
+    opacity: 0.9;
+  }

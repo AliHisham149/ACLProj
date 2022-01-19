@@ -1,292 +1,1251 @@
 const {Router} = require('express');
-const reservation = require('../models/reservation');
-const flight = require('../models/flights');
 const reservationsRouter = new Router();
 
-//Test Add reservation
- reservationsRouter.get("/addReservation", (req, res) => {
-    const flight1 = new reservation({
-         //User Data
-      Uid: "jd10j92dja",
-      Name:"Boody",
-      Email:"alihisham12345@gmail.com",
-      DateOfBirth:22-12-2021,
+const fs = require('fs');
+const chosenFlights = require('./../Models/chosenFlights.js')
+const seats = require('./../Models/seats.js')
+const existing = require('./../Models/existingUser.js');
+const reserved = require('./../Models/reservedFlights.js');
+const reservations = require('./../Models/Reservations.js');
+const admin = require('./../Models/admins.js')
+const flight = require('./../Models/flights.js');
+var nodemailer = require('nodemailer');
+const stripe = require('stripe')('sk_test_51K9xnYIbRPMFvA35UonKXnl680HBGH99mpgoCIrfRdlNt8PDogIMxTZASCoBMOikYA4UYjF0ZjvG2JMmu8wsgnKd00IpWbq57l');
+let boody = {"bagallowanceEco":"23", "bagallowanceBus":"32","bagallowanceFst":"45","childPriceRatio":"0.5"}
+let constantData = JSON.parse(boody);
+let lolo = {"FirstSeats":["a1","a2","a3","a4","b1","b2","b3","b4","c1","c2","c3","c4","d1","d2","d3","d4"],"BusinessSeats":["e1","e2","e3","e4","e5","e6","f1","f2","f3","f4","f5","f6","g1","g2","g3","g4","g5","g6","h1","h2","h3","h4","h5","h6","i1","i2","i3","i4","i5","i6"] ,"EconomySeats":["j1","j2","j3","j4","j5","j6","j7","j8","k1","k2","k3","k4","k5","k6","k7","k8","l1","l2","l3","l4","l5","l6","l7","l8","m1","m2","m3","m4","m5","m6","m7","m8","n1","n2","n3","n4","n5","n6","n7","n8","o1","o2","o3","o4","o5","o6","o7","o8","p1","p2","p3","p4","p5","p6","p7","p8","q1","q2","q3","q4","q5","q6","q7","q8"]}
+let seatsChart = JSON.parse(lolo);
+const passwordValidator = require('password-validator');
 
-    //First Flight Data
-      DepartureFlightNumber:"A69",
-      DepartureFlightSeats:["23C","25A"],  //Array of Strings
-      FirstFrom:"BERLIN",
-      FirstTo:"PARIS",
-      FirstFlightDate:21-2-2002,
-      FirstTerminalDeparture:6,
-      FirstTerminalArrival:2,
-      FirstArrivalTime:"10:40",
-      FirstDepartureTime:"9:20",
-      FirstDuration:"1:20",
-      FirstSeatType:["Economy","Business"],  //Array of Strings
-      FirstCost:20,
-
-      //Second Flight data
-      ReturnFlightNumber:"A420",
-      ReturnFlightSeats:["69A","420B"],
-      SecondFrom:"PARIS",
-      SecondTo:"BERLIN",
-      SecondFlightDate:26-2-2002,
-      SecondTerminalDeparture:3,
-      SecondTerminalArrival:5,
-      SecondArrivalTime:"11:55",
-      SecondDepartureTime:"10:15",
-      SecondDuration:"1:40",
-      SecondSeatTypes:["Economy","Business"],
-      SecondCost:40,
-
-
-      TotalPrice:60
-
-    })
-    flight1.save();
-
-
-
-    res.send("Reservation successfully added!")
+reservationsRouter.post("/showFlightReservedSeats", async (req, res) => {
+    const data = await seats.find({ FlightID: req.body.FlightID });
+    let eco = data[0].reservedEcoSeats;
+    let bus = data[0].reservedBusSeats;
+    let f = data[0].reservedFstSeats;
+    if (f == undefined) {
+        f = [];
+    }
+    if (bus == undefined) {
+        bus = [];
+    }
+    if (eco == undefined) {
+        eco = []
+    }
+    ob = { Economy: eco, Business: bus, First: f };
+    res.send(ob);
 })
 
-//Actual Add reservation
-reservationsRouter.post('/createReservation',async (req,res)=>{
-    const totalCost = req.body.totalCost
-    const firstFlightID = req.body._id
-    const secondFlightID = req.body._id2
-    console.log(req.body)
-    const reservation1 = new reservation({
-      //User Data
-      Uid: req.body.uid,
-      Name:req.body.name,
-      Email:req.body.email,
-      DateOfBirth:req.body.dob,
-    //First Flight Data
-      DepartureFlightNumber:req.body.depFlightNo,
-      DepartureFlightSeats:req.body.depFlightSeats,  //Array of Strings
-      FirstFrom:req.body.firstFrom,
-      FirstTo:req.body.firstTo,
-      FirstFlightDate:req.body.firstDate,
-      FirstTerminalDeparture:req.body.firstTerminalDep,
-      FirstTerminalArrival:req.body.FirstTerminalArr,
-      FirstArrivalTime:req.body.FirstArrTime,
-      FirstDepartureTime:req.body.FirstDepTime,
-      FirstDuration:req.body.FirstDuration,
-      FirstSeatType:req.body.FirstSeatType,  //Array of Strings
-      FirstCost:req.body.FirstCost,  
-      //Second Flight data
-      ReturnFlightNumber:req.body.retFlightNumber,
-      ReturnFlightSeats:req.body.retFlightSeats,
-      SecondFrom:req.body.secondFrom,
-      SecondTo:req.body.secondTo,
-      SecondFlightDate:req.body.secondFlightDate,
-      SecondTerminalDeparture:req.body.secondTerminalDep,
-      SecondTerminalArrival:req.body.SecondTerminalArr,
-
-      SecondArrivalTime:req.body.secondArrTime,
-      SecondDepartureTime:req.body.secondDepTime,
-      SecondDuration:req.body.secondDuration,
-      SecondSeatTypes:req.body.secondSeatTypes,
-      SecondCost:req.body.secondCost,
-      TotalPrice: totalCost,
-
-
-    })
-
-    //find flight and 2 
-    //remove them from databse
-    // update them hena 
-    //add them lel db tany
-    
-
-
-    var flight1 = await flight.find({_id:firstFlightID}).then((result)=>{
-        return result;
-    }).catch(err => console.error(`Failed to find document: ${err}`));
-
-
-
-    var flight2 = await flight.find({_id:secondFlightID}).then((result)=>{
-        return result;
-    }).catch(err => console.error(`Failed to find document: ${err}`));
-
-    flight.deleteOne({_id:firstFlightID}).then((result)=>{
-        console.log(result)
-    }).catch(err => console.error(`Failed to find document: ${err}`));
-    
-    flight.deleteOne({_id:secondFlightID}).then((result)=>{
-        console.log(result)
-    }).catch(err => console.error(`Failed to find document: ${err}`));
-
-
-
-    // Remove booked seats from flights' seat maps
-     var deptSeatCount = req.body.depFlightSeats.length
-     var retSeatCount = req.body.retFlightSeats.length
-
-
-
-    for (let i = 0; i < deptSeatCount; i++) {
-        // Remove seats from seat map of flight
-        console.log(flight1);
-        flight1[0]["SeatMap"].pop(req.body.retFlightSeats[i])
-
-        // Decrement number of available seats depending on seat type in flight 
-        if (req.body.FirstSeatType[i] === "Economy") {
-            flight1[0]['EconomyClassSeatsCount']--
-        }
-        else if (req.body.FirstSeatType[i]=== "Business") {
-            flight1[0]['BusinessClassSeatsCount']--
+reservationsRouter.post("/cancelReservation", async (req, res) => {
+    const query = await reservations.find({ _id: req.body.reservationId }).populate("User").populate("DepartId").populate("ReturnId");
+    reservations.deleteOne({ _id: req.body.reservationId }).exec(function (err, leads) {
+        if (err) {
+            console.log(err);
         }
         else {
-            flight1[0]['FirstClassSeatsCount']--
+            console.log("reservation cancelled!!")
         }
+    });
+    if (query.length != 0) {
+        res.send(query[0].User.email);
+        sub = "Reservation : " + query[0]._id + " cancellation";
+        txt = "You have cancelled your reservation with booking number: " + query[0]._id + " successfully!" + "\n";
+        dep = query[0].DepartId.FlightNu;
+        ret = query[0].ReturnId.FlightNu;
+        price = query[0].Total;
+        txt += "Your cancelled ticket details: " + "\n";
+        txt += "Departure Flight Number: " + dep + "\n";
+        txt += "Return Flight Number: " + ret + "\n";
+        txt += "Total amount to be refunded: " + price + "\n";
+        txt += "The refund has been requestd and will be processed within 14 days." + "\n" + "Thank you for using nowayhome airlines. We're sad to see you cancel!" + "\n" + "nowayhome Airlines";
+        var mailOptions = {
+            from: 'nowayhomeairlines@gmail.com',
+            to: query[0].User.email,
+            subject: sub,
+            text: txt
+        };
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'nowayhomeairlines@gmail.com',
+                pass: 'nowayhomefarmers1'
+            }
+        });
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
     }
-
-    for (let i = 0; i < retSeatCount; i++) {
-        // Remove seats from seat map of flight
-        flight2[0]["SeatMap"].pop(req.body.retFlightSeats[i])
-
-        // Decrement number of available seats depending on seat type in flight 
-        if (req.body.secondSeatTypes[i] === "Economy") {
-            flight2[0]['EconomyClassSeatsCount']--
-        }
-        else if (req.body.secondSeatTypes[i] === "Business") {
-            flight2[0]['BusinessClassSeatsCount'] --
-        }
-        else {
-            flight2[0]['FirstClassSeatsCount']--
-        }
+    else {
+        res.send("err")
     }
-    const newFlight1 = new flight({
-            From: flight1[0]["From"],
-            To: flight1[0]["To"],
-            FlightDate: flight1[0]["FlightDate"],
-            FirstClassSeatsCount:flight1[0]["FirstClassSeatsCount"],
-            BusinessClassSeatsCount:flight1[0]["BusinessClassSeatsCount"],
-            EconomyClassSeatsCount:flight1[0]["EconomyClassSeatsCount"],
-            TerminalDeparture:flight1[0]["TerminalDeparture"],
-            TerminalArrival:flight1[0]["TerminalArrival"],
-            FlightNumber:flight1[0]["FlightNumber"],
-            ArrivalTime:flight1[0]["ArrivalTime"],
-            DepartureTime:flight1[0]["DepartureTime"],
-            FlightCost:flight1[0]["FlightCost"],
-            TripDuration:flight1[0]["TripDuration"],
-            SeatMap:flight1[0]["SeatMap"],
+});
+
+
+
+reservationsRouter.post("/addReservation", (req, res) => {
+    const res1 = new reservations({
+        'DepartId': req.body.DepartId,
+        "DepartPassengersAdult": req.body.departAdult,
+        'DepartPassengersChild': req.body.departChild,
+        'DepartCabin': req.body.departCabin,
+        'DepartSeats': req.body.departSeats,
+        'DepartPrice': req.body.departPrice,
+        'DepartPriceTotal': req.body.DepartPriceTotal,
+        'ReturnId': req.body.ReturnId,
+        "ReturnPassengersAdult": req.body.returnAdult,
+        'ReturnPassengersChild': req.body.returnChild,
+        'ReturnPrice': req.body.returnPrice,
+        'ReturnPriceTotal': req.body.returnPriceTotal,
+        'ReturnCabin': req.body.returnCabin,
+        'ReturnSeats': req.body.returnSeats,
+        'User': "61abb8b7dda93117406ba763",
+        'Total': req.body.Total
 
     })
-    const newFlight2 = new flight({
-        From: flight2[0]["From"],
-        To: flight2[0]["To"],
-        FlightDate: flight2[0]["FlightDate"],
-        FirstClassSeatsCount:flight2[0]["FirstClassSeatsCount"],
-        BusinessClassSeatsCount:flight2[0]["BusinessClassSeatsCount"],
-        EconomyClassSeatsCount:flight2[0]["EconomyClassSeatsCount"],
-        TerminalDeparture:flight2[0]["TerminalDeparture"],
-        TerminalArrival:flight2[0]["TerminalArrival"],
-        FlightNumber:flight2[0]["FlightNumber"],
-        ArrivalTime:flight2[0]["ArrivalTime"],
-        DepartureTime:flight2[0]["DepartureTime"],
-        FlightCost:flight2[0]["FlightCost"],
-        TripDuration:flight2[0]["TripDuration"],
-        SeatMap:flight2[0]["SeatMap"],
-})
-    newFlight1.save()
-    newFlight2.save()
-    
-
-    reservation1.save().then((result) => {
+    res1.save().then((result) => {
         res.send(result)
+    }).catch((err) => {
+        console.log(err)
+    })
+});
 
-        //Sending Email to user
-        const msg = {
-            to: req.body.email,
-            from: 'test@example.com', // Use the email address or domain you verified above
-            subject: 'A reservation was made with this Email',
-            text: 'you can go to this link to check out your reservations ',
-          };
-          sgMail.send(msg).then(() => {}, error => {
-                    console.error(error);
+reservationsRouter.post("/cancelReservation", async (req, res) => {
+    const query = await reservations.find({ _id: req.body.reservationId }).populate("User").populate("DepartId").populate("ReturnId");
+    reservations.deleteOne({ _id: req.body.reservationId }).exec(function (err, leads) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("reservation cancelled!!")
+        }
+    });
+    if (query.length != 0) {
+        res.send(query[0].User.email);
+        sub = "Reservation : " + query[0]._id + " cancellation";
+        txt = "You have cancelled your reservation with booking number: " + query[0]._id + " successfully!" + "\n";
+        dep = query[0].DepartId.FlightNu;
+        ret = query[0].ReturnId.FlightNu;
+        price = query[0].Total;
+        txt += "Your cancelled ticket details: " + "\n";
+        txt += "Departure Flight Number: " + dep + "\n";
+        txt += "Return Flight Number: " + ret + "\n";
+        txt += "Total amount to be refunded: " + price + "\n";
+        txt += "The refund has been requestd and will be processed within 14 days." + "\n" + "Thank you for using nowayhome airlines. We're sad to see you cancel!" + "\n" + "nowayhome Airlines";
+        var mailOptions = {
+            from: 'nowayhomeairlines@gmail.com',
+            to: query[0].User.email,
+            subject: sub,
+            text: txt
+        };
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'nowayhomeairlines@gmail.com',
+                pass: 'nowayhomefarmers1'
+            }
+        });
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    else {
+        res.send("err")
+    }
+});
 
-                if (error.response) {
-                console.error(error.response.body)
+
+reservationsRouter.post("/flightSeatsInfo", async (req, res) => {
+    const query = await flight.find({ _id: req.body._id });
+    if (query.length == 0) {
+        res.send("flight not found")
+    }
+    else {
+        fst = query[0].NuofAvailableFirstSeats;
+        bus = query[0].NuofAvailableBuisnessSeats;
+        eco = query[0].NuofAvailableEconomySeats;
+        var o = await getReservedSeats(req.body._id);
+        if (o == null) {
+            o = { Economy: [], Business: [], First: [] }
+        }
+        ob = await getFlightSeats(eco, bus, fst, req.body_id);
+        const e = ob.economy;//array of all eco seats
+        const f = ob.first;//array of all first seats
+        const b = ob.business; //array of all bus seats
+        var c = new Array(e.length);
+        var c2 = new Array(b.length);
+        var c3 = new Array(f.length);
+        for (var i = 0; i < c.length; i++) {
+            c[i] = "hi";
+        }
+        for (var i = 0; i < c2.length; i++) {
+            c2[i] = "hi";
+        }
+        for (var i = 0; i < c3.length; i++) {
+            c3[i] = "hi";
+        }
+        var i = 0;
+        for (i; i < e.length; i++) {
+            if (o.Economy.includes(e[i]) || req.body.cabin != "Economy") {
+                ox = { seat: e[i], res: true };
+            }
+            else {
+                ox = { seat: e[i], res: false };
+            }
+            c[i] = ox;
+        }
+        for (var j = 0; j < b.length; j++) {
+            if (o.Business.includes(b[j]) || req.body.cabin != "Business") {
+                ox = { seat: b[j], res: true };
+            }
+            else {
+                ox = { seat: b[j], res: false };
+            }
+            c2[j] = ox;
+
+        }
+        for (var j = 0; j < f.length; j++) {
+            if (o.First.includes(f[j]) || req.body.cabin != "First") {
+                ox = { seat: f[j], res: true };
+            }
+            else {
+                ox = { seat: f[j], res: false };
+            }
+            c3[j] = ox;
+
+        }
+        result = { Economy: c, Business: c2, First: c3 };
+        console.log("xx");
+        res.send(result);
+    }
+});
+
+
+
+async function getReservedSeats(id) {
+    const data = await seats.find({ FlightID: id });
+    if (data.length == 0) {
+        console.log("no reservations");
+        return;
+    }
+    else {
+        let eco = data[0].reservedEcoSeats;
+        let bus = data[0].reservedBusSeats;
+        let f = data[0].reservedFstSeats;
+        if (f == undefined) {
+            f = [];
+        }
+        if (bus == undefined) {
+            bus = [];
+        }
+        if (eco == undefined) {
+            eco = []
+        }
+        ob = { Economy: eco, Business: bus, First: f };
+        console.log(ob);
+        return ob;
+    }
+}
+
+
+reservationsRouter.post("/editReservation", async (req, res) => {
+    const email = await getmail(req.body.user);
+    editRes(req.body.resv, email, req.body.update, req.body.str, req.body.val);
+    // reservations.updateOne({ _id: req.body._id }, req.body).exec(function (err, leads) {
+    //     res.status(201).send(leads);
+    // })
+})
+reservationsRouter.post("/editSeatingRes", async (req, res) => {
+    //remove old seats from old flight and add new seats to new flight
+
+    const query = await seats.find({ FlightID: req.body.oldFlight });
+    const c = req.body.oldcabin;
+    const c2 = req.body.newcabin;
+    bc = req.body.oldseats;
+    bf = req.body.newSeats
+    var x;
+    if (c == "Economy") {
+        x = query[0].reservedEcoSeats;
+    }
+    else if (c == "Business") {
+        x = query[0].reservedBusSeats;
+    }
+    else {
+        x = query[0].reservedFstSeats;
+    }
+    console.log(x);
+    z = query[0].reservedSeats;
+    console.log(z)
+    for (var i = 0; i < bc.length; i++) {
+        x = removeSeat(bc[i], x);
+        z = removeSeat(bc[i], z);
+    }
+    if (c == "Economy") {
+        ob = { reservedEcoSeats: x, reservedSeats: z }
+
+    }
+    else if (c == "Business") {
+        ob = { reservedBusSeats: x, reservedSeats: z }
+    }
+    else {
+        ob = { reservedFstSeats: x, reservedSeats: z }
+    }
+    seats.updateOne({ FlightID: req.body.oldFlight }, ob).exec(function (err, leads) {
+        res.status(201).send(leads);
+    })
+    const data = await seats.find({ FlightID: req.body.newFlight });
+    if (c2 == "Economy") {
+        x = data[0].reservedEcoSeats;
+    }
+    else if (c2 == "Business") {
+        x = data[0].reservedBusSeats;
+    }
+    else {
+        x = data[0].reservedFstSeats;
+    }
+    console.log(x);
+    z = data[0].reservedSeats;
+    x = x.concat(bf);//reserved seats in cabin
+    z = z.concat(bf);//all reserved seats
+    console.log(x);
+    console.log(z)
+    if (c2 == "Economy") {
+        console.log("changing")
+        ob = { reservedEcoSeats: x, reservedSeats: z }
+
+    }
+    else if (c2 == "Business") {
+        ob = { reservedBusSeats: x, reservedSeats: z }
+    }
+    else {
+        ob = { reservedFstSeats: x, reservedSeats: z }
+    }
+    console.log(ob);
+    seats.updateOne({ FlightID: req.body.newFlight }, ob).exec(function (err, leads) {
+        res.status(201).send(leads);
+    })
+})
+
+function editRes(resv, email, update, str, val) {
+    reservations.updateOne({ _id: resv }, update).then((result) => {
+        reservations.find({ _id: resv }).then((data) => {
+            sub = "Reservation : " + resv + " updated!";
+            txt = iten(data[0]);
+            txt += "\n";
+            if (val != 0) {
+                txt += "Price difference: " + val + "$ paid successfully"
+            }
+            else {
+                txt += str;
+            }
+
+            txt += "\n" + "\n";
+            txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+            var mailOptions = {
+                from: 'nowayhomeairlines@gmail.com',
+                to: email,
+                subject: sub,
+                text: txt
+            };
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'nowayhomeairlines@gmail.com',
+                    pass: 'nowayhomefarmers1'
                 }
-                console.log("Email sent successfuly ")
-            });    
+            });
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }).catch((err) => {
+            console.log(err)
+        })
+    })
+
+}
+
+reservationsRouter.post("/viewUsersReservations", async (req, res) => {
+
+    reservations.find({ User: req.body.user }).populate("User").populate("DepartId").populate("ReturnId").then(async (p) => {
+        console.log(p);//p returns array of user's reservations
+        res.send(p);
+    })
+        .catch(error => console.log(error))
+})
+
+function addRes(ob, email) {
+    const res1 = new reservations({
+        'DepartId': ob.DepartId._id,
+        "DepartPassengersAdult": ob.adult,
+        'DepartPassengersChild': ob.child,
+        'DepartCabin': ob.cabin,
+        'DepartSeats': ob.DepartSeats,
+        'DepartPrice': ob.DepartPrice,
+        'DepartPriceTotal': ob.DepartPriceTotal,
+        'ReturnId': ob.ReturnId._id,
+        "ReturnPassengersAdult": ob.adult,
+        'ReturnPassengersChild': ob.child,
+        'ReturnPrice': ob.ReturnPrice,
+        'ReturnPriceTotal': ob.returnPriceTotal,
+        'ReturnCabin': ob.cabin,
+        'ReturnSeats': ob.ReturnSeats,
+        'User':  ob.user,
+        'Total': ob.Total,
+    })
+    res1.save().then((result) => {
+        sub = "Reservation : " + result._id + " confirmation!";
+        txt = iten(ob);
+        txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+        var mailOptions = {
+            from: 'nowayhomeairlines@gmail.com',
+            to: email,
+            subject: sub,
+            text: txt
+        };
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'nowayhomeairlines@gmail.com',
+                pass: 'nowayhomefarmers1'
+            }
+        });
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+
+async function getmail(id) {
+    const data = await existing.find({ _id: id });
+    return data[0].email;
+}
+reservationsRouter.post("/ReservationSummary", (req, res) => {
+    reservations.find({ _id: req.body.reservationId }).populate("User").populate("DepartId").populate("ReturnId").then((p) => {
+        console.log(p);
+        if (p.length == 0) {
+            res.send("flight not found");
+            return;
+        }
+        let c = p[0].DepartCabin;
+        departBaggage = getBaggage(c);
+        let c2 = p[0].ReturnCabin;
+        returnBag = getBaggage(c2);
+        p[0] = p[0].toJSON();
+        p[0].departureBaggage = departBaggage;
+        p[0].returnBaggage = returnBag;
+        res.send(p[0]);
+    })
+})
+
+
+
+
+
+async function summary(id) {
+    const p = await reservations.find({ _id: id }).populate("User").populate("DepartId").populate("ReturnId");
+    console.log(p);
+    if (p.length == 0) {
+        res.send("flight not found");
+        return;
+    }
+    let c = p[0].DepartCabin;
+    departBaggage = getBaggage(c);
+    let c2 = p[0].ReturnCabin;
+    returnBag = getBaggage(c2);
+    p[0] = p[0].toJSON();
+    p[0].departureBaggage = departBaggage;
+    p[0].returnBaggage = returnBag;
+    return p[0];
+}
+
+
+reservationsRouter.post("/deleteSeat", async (req, res) => {
+    seats.updateOne({ FlightID: req.body._id }, req.body).exec(function (err, leads) {
+        res.status(201).send(leads);
+    });
+})
+
+reservationsRouter.post("/editReservation", async (req, res) => {
+    const email = await getmail(req.body.user);
+    await editRes(req.body.resv, email, req.body.update, req.body.str, req.body.val);
+})
+
+async function editRes(resv, email, update, str, val) {
+    reservations.updateOne({ _id: resv }, update).then((result) => {
+        reservations.find({ _id: resv }).populate("User").populate("DepartId").populate("ReturnId").then((data) => {
+            sub = "Reservation : " + resv + " updated!";
+            txt = iten(data[0]);
+            txt += "\n";
+            if (val != 0) {
+                txt += "Price difference: " + val + "$ paid successfully"
+            }
+            else {
+                txt += str;
+            }
+
+            txt += "\n" + "\n";
+            txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+            var mailOptions = {
+                from: 'nowayhomeairlines@gmail.com',
+                to: email,
+                subject: sub,
+                text: txt
+            };
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'nowayhomeairlines@gmail.com',
+                    pass: 'nowayhomefarmers1'
+                }
+            });
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }).catch(error => console.log(error));
+
+    }).catch(err => console.log(err));
+}
+
+async function sendEmail(result, product, email) {
+    console.log("then");
+    sub = "Reservation : " + product._id + " confirmation!";
+    txt = iten(product);
+    txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+    var mailOptions = {
+        from: 'nowayhomeairlines@gmail.com',
+        to: email,
+        subject: sub,
+        text: txt
+    };
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'nowayhomeairlines@gmail.com',
+            pass: 'nowayhomefarmers1'
+        }
+    });
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+function iten(res) {
+    //const res = await summary(ob._id);
+    txt = "Pack your bags! Your payment was successful and your ticket reservation is now confirmed! " + "\n";
+    dep = res.DepartId;
+    ret = res.ReturnId;
+    txt += "Your Itinerary: " + "\n" + "\n";
+    txt += "Departure Flight: " + "\n" + "\n";
+    txt += "Departure Airport: " + dep.From + "\n";
+    txt += "Arrival Airport: " + dep.To + "\n";
+    txt += "Flight Number: " + dep.FlightNu + "\n";
+    txt += "Flight Date: " + dep.FlightDate + "\n";
+    txt += "Departure Time: " + dep.DepartureTime + "\n";
+    txt += "Arrival Time: " + dep.ArrivalTime + "\n";
+    txt += "Ticket Price: " + res.DepartPrice + "\n";
+    txt += "Seats: " + res.DepartSeats + "\n" + "\n";
+    txt += "Return Flight: " + "\n" + "\n";
+    txt += "Departure Airport: " + ret.From + "\n";
+    txt += "Arrival Airport: " + ret.To + "\n";
+    txt += "Flight Number: " + ret.FlightNu + "\n";
+    txt += "Flight Date: " + ret.FlightDate + "\n";
+    txt += "Departure Time: " + ret.DepartureTime + "\n";
+    txt += "Arrival Time: " + ret.ArrivalTime + "\n";
+    txt += "Ticket Price: " + res.ReturnPrice + "\n";
+    txt += "Seats: " + res.ReturnSeats + "\n" + "\n";
+    txt += "Total Cost: " + res.Total + "\n" + "\n";
+    return txt;
+}
+
+reservationsRouter.post("/editSeatingRes", async (req, res) => {
+    //remove old seats from old flight and add new seats to new flight
+
+    const query = await seats.find({ FlightID: req.body.oldFlight });
+    const c = req.body.oldcabin;
+    const c2 = req.body.newcabin;
+    bc = req.body.oldseats;
+    bf = req.body.newSeats
+    var x;
+    if (c == "Economy") {
+        x = query[0].reservedEcoSeats;
+    }
+    else if (c == "Business") {
+        x = query[0].reservedBusSeats;
+    }
+    else {
+        x = query[0].reservedFstSeats;
+    }
+    console.log(x);
+    z = query[0].reservedSeats;
+    console.log(z)
+    for (var i = 0; i < bc.length; i++) {
+        x = removeSeat(bc[i], x);
+        z = removeSeat(bc[i], z);
+    }
+    if (c == "Economy") {
+        ob = { reservedEcoSeats: x, reservedSeats: z }
+
+    }
+    else if (c == "Business") {
+        ob = { reservedBusSeats: x, reservedSeats: z }
+    }
+    else {
+        ob = { reservedFstSeats: x, reservedSeats: z }
+    }
+    seats.updateOne({ FlightID: req.body.oldFlight }, ob).exec(function (err, leads) {
+        // res.status(201).send(leads);
+    })
+    const data = await seats.find({ FlightID: req.body.newFlight });
+    if (c2 == "Economy") {
+        x = data[0].reservedEcoSeats;
+    }
+    else if (c2 == "Business") {
+        x = data[0].reservedBusSeats;
+    }
+    else {
+        x = data[0].reservedFstSeats;
+    }
+    console.log(x);
+    z = data[0].reservedSeats;
+    x = x.concat(bf);//reserved seats in cabin
+    z = z.concat(bf);//all reserved seats
+    console.log(x);
+    console.log(z)
+    if (c2 == "Economy") {
+        console.log("changing")
+        ob = { reservedEcoSeats: x, reservedSeats: z }
+
+    }
+    else if (c2 == "Business") {
+        ob = { reservedBusSeats: x, reservedSeats: z }
+    }
+    else {
+        ob = { reservedFstSeats: x, reservedSeats: z }
+    }
+    console.log(ob);
+    seats.updateOne({ FlightID: req.body.newFlight }, ob).exec(function (err, leads) {
+        // res.status(201).send(leads);
+    })
+})
+reservationsRouter.post("/reserveSeats", async (req, res) => {//reserves seats, doesn't make sure it's already in the data
+    c = req.body.cabin;
+    seats.find({ FlightID: req.body.FlightID }).lean().exec(function (err, data) {
+        if (data.length != 0) {
+            a = data[0].reservedSeats;
+            rSeats = a.concat(req.body.seats);
+            if (c == "Economy") {
+                if (data[0].reservedEcoSeats != null && data[0].reservedEcoSeats.length != 0) {
+                    b = data[0].reservedEcoSeats;
+                    console.log(data[0].reservedEcoSeats)
+                    bc = b.concat(req.body.seats);
+                    console.log(bc);
+                } else {
+                    if (Array.isArray(req.body.seats)) {
+                        bc = req.body.seats
+                    }
+                    else {
+                        bc = [req.body.seats];
+                    }
+                }
+                o = { reservedEcoSeats: bc }
+            }
+            else if (c == "First") {
+                if (data[0].reservedFstSeats != null && data[0].reservedFstSeats.length != 0) {
+                    b = data[0].reservedFstSeats;
+                    bc = b.concat(req.body.seats);
+                } else {
+                    if (Array.isArray(req.body.seats)) {
+                        bc = req.body.seats
+                    }
+                    else {
+                        bc = [req.body.seats];
+                    }
+                }
+                o = { reservedFstSeats: bc };
+            }
+            else {
+                if (data[0].reservedBusSeats != null && data[0].reservedBusSeats.length != 0) {
+                    b = data[0].reservedBusSeats; bc = b.concat(req.body.seats);
+                } else {
+                    if (Array.isArray(req.body.seats)) {
+                        console.log(Array.isArray(req.body.seats));
+                        console.log(req.body.seats);
+                        bc = req.body.seats
+                    }
+                    else {
+                        bc = [req.body.seats];
+                    }
+                }
+                o = { reservedBusSeats: bc };
+            }
+            ob = { reservedSeats: rSeats };
+            let re = Object.assign(ob, o);
+            seats.updateOne({ FlightID: req.body.FlightID }, re).exec(function (err, leads) {
+                console.log("updated");
+                res.status(201).send(leads);
+            });
+        }
+        else {
+            if (Array.isArray(req.body.seats)) {
+                bc = req.body.seats
+            }
+            else {
+                bc = [req.body.seats];
+            }
+            if (c == "Economy") {
+                console.log(req.body.seats);
+                ob = {
+                    "FlightID": req.body.FlightID,
+                    "reservedSeats": bc,
+                    "reservedEcoSeats": bc
+                }
+            }
+            else if (c == "Business") {
+                ob = {
+                    "FlightID": req.body.FlightID,
+                    "reservedSeats": bc,
+                    "reservedBusSeats": bc
+                }
+            }
+            else {
+                ob = {
+                    "FlightID": req.body.FlightID,
+                    "reservedSeats": bc,
+                    "reservedFstSeats": bc
+                }
+            }
+            const sts = new seats(ob)
+            sts.save().then((result) => {
+
+                res.send(result)
+            })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+        }
+
+    })
+})
+
+reservationsRouter.post("/getAvailableCabinSeats", async (req, res) => {
+    getAvailableCabinSeat(req.body.cabin, req.body.FlightID).then((result) => {
+        res.send(result)
     })
         .catch((err) => {
             console.log(err)
         })
 })
+reservationsRouter.post("/showReservedCabinSeats", async (req, res) => {
+    let c = req.body.cabin;
+    const data = await seats.find({ FlightID: req.body.FlightID });
+    console.log(data);
+    if (c == "Economy") {
+        rs = data[0].reservedEcoSeats;
+    }
+    else if (c == "First") {
+        rs = data[0].reservedFstSeats;
+    }
+    else {
+        rs = data[0].reservedBusSeats;
+    }
+    console.log(rs);
+    if (rs == undefined) {
+        res.send([]);
+    }
+    else {
+        res.send(rs);
+    }
+})
 
-//cancel reservation
-reservationsRouter.post("/cancelReservation", (req, res) => {
-    const msg = {
-        to: req.body.email,
-        from: 'test@example.com', // Use the email address or domain you verified above
-        subject: 'A reservation was cancelled with this Email',
-        text: 'you can go to this link to check out your reservations ',
-      };
-      sgMail.send(msg).then(() => {}, error => {
-                console.error(error);
+reservationsRouter.post("/showFlightAvailableSeatsNumber", async (req, res) => {
+    ob = { Economy: (await getAvailableCabinSeat("Economy", req.body.FlightID)).length, Business: (await getAvailableCabinSeat("Business", req.body.FlightID)).length, First: (await getAvailableCabinSeat("First", req.body.FlightID)).length };
+    res.send(ob);
+})
+reservationsRouter.post("/showFlightAvailableSeats", async (req, res) => {
+    ob = { Economy: (await getAvailableCabinSeat("Economy", req.body.FlightID)), Business: (await getAvailableCabinSeat("Business", req.body.FlightID)), First: (await getAvailableCabinSeat("First", req.body.FlightID)) };
+    res.send(ob);
+})
 
-            if (error.response) {
-            console.error(error.response.body)
+async function getAvailableCabinSeat(c, id) {
+    const data = await seats.find({ FlightID: id });
+    if (data.length == 0) {
+        s = await getSeatNumbers(id);
+        console.log(s);
+        ob = getFlightSeats(s.e, s.b, s.f);
+        console.log(ob);
+        if (c == "Economy") {
+            st = ob.economy;
+        }
+        else if (c == "First") {
+            st = ob.first;
+        }
+        else {
+            st = ob.business;
+        }
+        return st;
+    }
+    else {
+        console.log(data);
+        s = await getSeatNumbers(id);
+        console.log(s);
+        ob = getFlightSeats(s.e, s.b, s.f);
+        console.log(ob);
+        if (c == "Economy") {
+            st = ob.economy;
+            rs = data[0].reservedEcoSeats;
+            console.log("reserved seats are " + rs);
+        }
+        else if (c == "First") {
+            st = ob.first;
+            rs = data[0].reservedFstSeats;
+        }
+        else {
+            st = ob.business;
+            rs = data[0].reservedBusSeats;
+        }
+        console.log(st)
+        console.log(rs);
+        if (rs == undefined) {
+            return st;
+        }
+        for (var i = 0; i < rs.length; i++) {
+            if (st.includes(rs[i])) {
+                remove(st, rs[i]);
             }
-            console.log("Email sent successfuly ")
-        });
-   
-    //find reservation in reservations
-    const reservationID = req.body._id
-    const deptFlightNo = reservation.find(reservationID).DepartureFlightNumber
-    const retFlightNo =  reservation.find(reservationID).ReturnFlightNumber
-    const deptSeatCount = reservation.find(reservationID).DepartureFlightSeats.length
-    const retSeatCount = reservation.find(reservationID).ReturnFlightSeats.length
-    
-    //put seats from dep flight seats from reservation back to dep seats in flights
-    for (let i = 0; i < deptSeatCount; i++) {
-        // Move seats from reservation to be available in flight 
-        flight.find(deptFlightNo).SeatMap.push(reservation.find(reservationID).DepartureFlightSeats[i])
-
-        // Increase number of available seats depending on seat type in flight 
-        if (reservation.find(reservationID).FirstSeatType[i]=== "Economy") {
-            flight.find(deptFlightNo).EconomyClassSeatsCount++
         }
-        else if (reservation.find(reservationID).FirstSeatType[i]=== "Business") {
-            flight.find(deptFlightNo).BusinessClassSeatsCount++
-        }
-        else {
-            flight.find(deptFlightNo).FirstClassSeatsCount++
-        }
+        console.log(st);
+        return st;
     }
-
-    // Repeat same loop for the return flight in resevation
-    for (let i = 0; i < retSeatCount; i++){
-        flight.find(retFlightNo).SeatMap.push(reservation.find(reservationID).ReturnFlightSeats[i])
-
-        if (reservation.find(reservationID).FirstSeatType[i]=== "Economy") {
-            flight.find(retFlightNo).EconomyClassSeatsCount++
-        }
-        else if (reservation.find(reservationID).FirstSeatType[i]=== "Business") {
-            flight.find(retFlightNo).BusinessClassSeatsCount++
-        }
-        else {
-            flight.find(retFlightNo).FirstClassSeatsCount++
-        }
-    }
-    reservation.deleteOne({ _id : req.body._id}).exec(function (err, leads) {
-        res.status(201).send(leads);
-    });
-    //Remove reservation from reservations
-   });
-
-//get reservations
-reservationsRouter.get("/getReservations",(req,res)=>{
-    reservation.find({}).exec(function(err, data){    
-        res.send(data)     
+}
+reservationsRouter.post("/flightSeating", async (req, res) => {
+    const query = await flight.find({ _id: req.body._id });
+    fst = query[0].NuofAvailableFirstSeats;
+    bus = query[0].NuofAvailableBuisnessSeats;
+    eco = query[0].NuofAvailableEconomySeats;
+    capacity = fst + bus + eco;
+    ob = getFlightSeats(eco, bus, fst, req.body_id);
+    o = { firstNu: fst, businessNu: bus, economyNu: eco, totalcapacity: capacity }
+    re = Object.assign(ob, o);
+    res.send(re);
+})
+reservationsRouter.get("/showReservedSeats", (req, res) => {//shows all the seat reservation database => each flight and its reserved seats
+    seats.find({}).exec(function (err, data) {
+        res.send(data);
+    })
+});
+reservationsRouter.post("/showFlightReservedSeats", (req, res) => {//shows the reserved seats of a specific flight (all cabin types)
+    seats.find({ FlightID: req.body.FlightID }).exec(function (err, data) {
+        res.send(data);
     })
 })
+
+reservationsRouter.post("/checkSeat", (req, res) => {
+    seats.find({ FlightID: req.body.FlightID }).lean().exec(function (err, data) {
+        seat = req.body.seat;
+        a = data[0].reservedSeats;
+        if (a.includes(seat)) {
+            res.send("reserved");
+        }
+        else {
+            res.send("not reserved");
+        }
+    })
+})
+
+
+function removeSeat(u, ar) {
+    const y = ar.filter(function (value, index, arr) {
+        return value != u;
+    })
+    console.log(y);
+    return y;
+}
+
+
+reservationsRouter.post("/editSeating", async (req, res) => {
+    const query = await seats.find({ FlightID: req.body.FlightID });
+    const c = req.body.cabin;
+    bc = req.body.oldseats;
+    bf = req.body.newSeats
+    if (query.length == 0) {
+        if (c == "Economy") {
+            console.log(req.body.seats);
+            ob = {
+                "FlightID": req.body.FlightID,
+                "reservedSeats": bc,
+                "reservedEcoSeats": bc
+            }
+        }
+        else if (c == "Business") {
+            ob = {
+                "FlightID": req.body.FlightID,
+                "reservedSeats": bc,
+                "reservedBusSeats": bc
+            }
+        }
+        else {
+            ob = {
+                "FlightID": req.body.FlightID,
+                "reservedSeats": bc,
+                "reservedFstSeats": bc
+            }
+        }
+        const sts = new seats(ob)
+        sts.save().then((result) => {
+
+            res.send(result)
+        })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+    else {
+        var x;
+        if (c == "Economy") {
+            x = query[0].reservedEcoSeats;
+        }
+        else if (c == "Business") {
+            x = query[0].reservedBusSeats;
+        }
+        else {
+            x = query[0].reservedFstSeats;
+        }
+        console.log(x);
+        z = query[0].reservedSeats;
+        console.log(z)
+        for (var i = 0; i < bc.length; i++) {
+            x = removeSeat(bc[i], x);
+            z = removeSeat(bc[i], z);
+        }
+        console.log(x);
+        console.log(z)
+        x = x.concat(bf);//reserved seats in cabin
+        z = z.concat(bf);//all reserved seats
+        console.log(x);
+        console.log(z)
+        if (c == "Economy") {
+            console.log("changing")
+            ob = { reservedEcoSeats: x, reservedSeats: z }
+
+        }
+        else if (c == "Business") {
+            ob = { reservedBusSeats: x, reservedSeats: z }
+        }
+        else {
+            ob = { reservedFstSeats: x, reservedSeats: z }
+        }
+        console.log(ob);
+        seats.updateOne({ FlightID: req.body.FlightID }, ob).exec(function (err, leads) {
+            res.status(201).send(leads);
+        })
+    }
+})
+
+async function getReservedSeats(id) {
+    const data = await seats.find({ FlightID: id });
+    if (data.length == 0) {
+        console.log("no reservations");
+        return;
+    }
+    else {
+        let eco = data[0].reservedEcoSeats;
+        let bus = data[0].reservedBusSeats;
+        let f = data[0].reservedFstSeats;
+        if (f == undefined) {
+            f = [];
+        }
+        if (bus == undefined) {
+            bus = [];
+        }
+        if (eco == undefined) {
+            eco = []
+        }
+        ob = { Economy: eco, Business: bus, First: f };
+        console.log(ob);
+        return ob;
+    }
+}
+
+
+function getBaggage(cabin) {
+    if (cabin == "First") {
+        Baggage = constantData.bagallowanceFst;
+    }
+    else if (cabin == "Business") {
+        Baggage = constantData.bagallowanceBus;
+    }
+    else {
+        Baggage = constantData.bagallowanceEco;
+    }
+    return Baggage;
+}
+function calcTotalPrice(price, children, adults) {//cabin price as input per 1 ticket
+    a = price * adults;
+    b = children * constantData.childPriceRatio * price;
+    return a + b;
+}
+
+function getFlightSeats(eco, bus, fst) {
+    const f = seatsChart.FirstSeats.slice(0, fst);
+    const b = seatsChart.BusinessSeats.slice(0, bus);
+    const e = seatsChart.EconomySeats.slice(0, eco);
+    ob = { economy: e, first: f, business: b };
+    return ob;
+
+}
+async function getSeatNumbers(flightID) {
+    const data = await flight.find({ _id: flightID });
+    fst = data[0].NuofAvailableFirstSeats;
+    bus = data[0].NuofAvailableBuisnessSeats;
+    eco = data[0].NuofAvailableEconomySeats;
+    ob = { f: fst, b: bus, e: eco };
+    return ob;
+}
+function remove(array, element) {
+    const index = array.indexOf(element);
+    array.splice(index, 1);
+}
+
+reservationsRouter.post("/AddDepartureFlight", (req, res) => {
+    const newFlight = new chosenFlights({
+        'DepartId': req.body.FlightId,
+        "DepartPassengersAdult": req.body.adultPass,
+        'DepartPassengersChild': req.body.childPass,
+        'DepartCabin': req.body.cabin
+    })
+    newFlight.save().then((result) => {
+        console.log(result);
+        chosenFlights.find({ _id: result._id }).populate("DepartId").then((p) => {
+            console.log(p);
+            let c = req.body.cabin;
+            let total = req.body.adultPass + req.body.childPass;
+            if (c == "Economy") {
+                ticket = p[0].DepartId.EcoPrice;
+            }
+            else if (c == "Business") {
+                ticket = p[0].DepartId.BusPrice;
+            }
+            else {
+                ticket = p[0].DepartId.FPrice;
+            }
+            ticketT = (req.body.adultPass * ticket) + (req.body.childPass * ticket * constantData.childPriceRatio);
+            chosenFlights.updateOne({ _id: result._id }, { DepartPrice: ticket, DepartPriceTotal: ticketT }).exec(function (err, q) {
+                console.log("prices updated");
+            })
+
+        }).catch(error => console.log(error));
+        res.send(result)
+    })
+        .catch((err) => {
+            console.log(err)
+        })
+
+});
+
+
+reservationsRouter.post("/searchReturnFlights", async (req, res) => {
+
+    const criteria = { From: req.body.From, To: req.body.To, FlightDate: req.body.departureDate, ReturnBool: true };
+    let c = req.body.cabin;
+    let total = req.body.adults + req.body.child;
+    try {
+        const fquery = await flight.find(criteria);//result set is query
+        //sends each one as an object in an array
+        console.log(fquery);//print 1
+        let r = [];
+        for (var i = 0; i < fquery.length; i++) {
+            let f = fquery[i]._id;
+            console.log(f);//print 2
+            const squery = await seats.find({ FlightID: f });
+            console.log(squery);
+            let cond = squery.length == 0;//if flight has no reserved seats yet
+            console.log(cond);
+            if (!cond) {
+                ob = await getSeatNumbers(f);
+                if (c == "Economy") {
+                    capacity = ob.e;
+                    c2 = (squery[0].reservedEcoSeats.length == capacity) || ((capacity - squery[0].reservedEcoSeats.length) < total)//not enough pass
+                }
+                else if (c == "Business") {
+                    capacity = ob.b;
+                    c2 = (squery[0].reservedBusSeats.length == capacity) || ((capacity - squery[0].reservedBusSeats.length) < total)
+                }
+                else {
+                    capacity = ob.f;
+                    c2 = (squery[0].reservedFstSeats.length == capacity) || ((capacity - squery[0].reservedFstSeats.length) < total);
+                }
+                console.log(c2);
+                if (!c2) {
+                    r.push(fquery[i]);
+                }
+            }
+            else {
+                r.push(fquery[i]);
+            }
+        }
+        console.log(fquery);
+        console.log("xxxx111");
+        console.log(r);
+        let re = [];
+        for (var i = 0; i < r.length; i++) {
+            x = r[i];
+            x = x.toJSON();
+            console.log(x);
+            if (c == "Economy") {
+                p = x.EcoPrice;
+            }
+            else if (c == "Business") {
+                p = x.BusPrice;
+            }
+            else {
+                p = x.FPrice;
+            }
+            console.log(p);
+            delete x.EcoPrice;
+            delete x.BusPrice;
+            delete x.FPrice;
+            console.log(x);
+            x.price = p;
+            console.log(x);
+            re.push(x);
+        }
+        console.log(re);
+        res.json(re);
+    } catch (err) {
+        res.json({ message: err });
+    }
+
+});
+
+
+reservationsRouter.post("/searchDepartureFlights", async (req, res) => {
+    const criteria = { From: req.body.From, To: req.body.To, FlightDate: req.body.departureDate, DepartBool: true };
+    let c = req.body.cabin;
+    let total = req.body.adults + req.body.child;
+    try {
+        const fquery = await flight.find(criteria);//result set is query
+        //sends each one as an object in an array
+        console.log(fquery);//print 1
+        let r = [];
+        for (var i = 0; i < fquery.length; i++) {
+            let f = fquery[i]._id;
+            console.log(f);//print 2
+            const squery = await seats.find({ FlightID: f });
+            console.log(squery);
+            let cond = squery.length == 0;//if flight has no reserved seats yet
+            console.log(cond);
+            if (!cond) {
+                ob = await getSeatNumbers(f);
+                if (c == "Economy") {
+                    capacity = ob.e;
+                    c2 = (squery[0].reservedEcoSeats.length == capacity) || ((capacity - squery[0].reservedEcoSeats.length) < total)//not enough pass
+                }
+                else if (c == "Business") {
+                    capacity = ob.b;
+                    c2 = (squery[0].reservedBusSeats.length == capacity) || ((capacity - squery[0].reservedBusSeats.length) < total)
+                }
+                else {
+                    capacity = ob.f;
+                    c2 = (squery[0].reservedFstSeats.length == capacity) || ((capacity - squery[0].reservedFstSeats.length) < total);
+                }
+                console.log(c2);
+                if (!c2) {
+                    r.push(fquery[i]);
+                }
+            }
+            else {
+                r.push(fquery[i]);
+            }
+        }
+        console.log(fquery);
+        console.log("xxxx111");
+        console.log(r);
+        let re = [];
+        for (var i = 0; i < r.length; i++) {
+            x = r[i];
+            x = x.toJSON();
+            console.log(x);
+            if (c == "Economy") {
+                p = x.EcoPrice;
+            }
+            else if (c == "Business") {
+                p = x.BusPrice;
+            }
+            else {
+                p = x.FPrice;
+            }
+            console.log(p);
+            delete x.EcoPrice;
+            delete x.BusPrice;
+            delete x.FPrice;
+            console.log(x);
+            x.price = p;
+            console.log(x);
+            re.push(x);
+        }
+        console.log(re);
+        res.json(re);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
+
+
+reservationsRouter.post("/AddReturnFlight", async (req, res) => {//places chosen return flight into db
+    const cf = await chosenFlights.updateOne({ _id: req.body._id }, {
+        'ReturnId': req.body.FlightId,
+        "ReturnPassengersAdult": req.body.adultPass,
+        'ReturnPassengersChild': req.body.childPass,
+        'ReturnCabin': req.body.cabin,
+
+    })
+    console.log(cf);
+    chosenFlights.find({ _id: req.body._id }).populate("ReturnId").populate("DepartId").then(async (p) => {
+        console.log(p);
+        let c = req.body.cabin;
+        let total = req.body.adultPass + req.body.childPass;
+        if (c == "Economy") {
+            ticket = p[0].ReturnId.EcoPrice;
+        }
+        else if (c == "Business") {
+            ticket = p[0].ReturnId.BusPrice;
+        }
+        else {
+            ticket = p[0].ReturnId.FPrice;
+        }
+        ticketT = (req.body.adultPass * ticket) + (req.body.childPass * ticket * constantData.childPriceRatio);
+        sub = ticket + p[0].DepartPrice;
+        total = ticketT + p[0].DepartPriceTotal;
+        const q = await chosenFlights.updateOne({ _id: req.body._id }, { ReturnPrice: ticket, ReturnPriceTotal: ticketT, SubTotal: sub, Total: total });
+        res.send(p);
+    }).catch(error => console.log(error));
+
+});
 
 module.exports = reservationsRouter;
