@@ -10,6 +10,9 @@ Our Website is an online airline reservation system that offers manz services fo
 ### Motivation:
 Allowing users to book flight tickets from comfort of their homes saving much of effort and time. Users can also search for available flights and view details to select their wanted flights immediately 
 
+### Build Status:
+The Code currently builds without any known issues. If you find any bugs/issues, please open an issue here on Github or better yet create a PR and ask for review.   
+
 ### Code Style: 
 We used standard code style .
 
