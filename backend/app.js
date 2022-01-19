@@ -21,16 +21,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const flight = require('./Models/flights.js')
 //var jwt = require('express-jwt');
-
-
 var nodemailer = require('nodemailer');
-
-
-
 const stripe = require('stripe')('sk_test_51K9xnYIbRPMFvA35UonKXnl680HBGH99mpgoCIrfRdlNt8PDogIMxTZASCoBMOikYA4UYjF0ZjvG2JMmu8wsgnKd00IpWbq57l');
 const seats = require('./Models/seats.js')
 const existing = require('./Models/users.js');
-const reservations = require('./Models/Reservations.js');
+const reservations = require('./Models/reservations.js');
 
 const { v4: uuidv4 } = require('uuid');
 const admin = require('./Models/admins.js')
@@ -755,18 +750,19 @@ app.post("/cancelReservation", async (req, res) => {
         txt += "Total amount to be refunded: " + price + "\n";
         txt += "The refund has been requestd and will be processed within 14 days." + "\n" + "Thank you for using nowayhome airlines. We're sad to see you cancel!" + "\n" + "nowayhome Airlines";
         var transporter = nodemailer.createTransport({
-            service:'gmail',
-            auth:{
-              user:'ershacl123@gmail.com',
+            service: 'gmail',
+            auth: {
+                user:'ershacl123@gmail.com',
               pass:'ershacl0'
             }
-          });
+        });
         var mailOptions = {
             from: 'nowayhomeairlines@gmail.com',
             to: query[0].User.email,
             subject: sub,
             text: txt
         };
+       
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
@@ -830,19 +826,20 @@ app.post("/cancelReservation", async (req, res) => {
         txt += "Return Flight Number: " + ret + "\n";
         txt += "Total amount to be refunded: " + price + "\n";
         txt += "The refund has been requestd and will be processed within 14 days." + "\n" + "Thank you for using nowayhome airlines. We're sad to see you cancel!" + "\n" + "nowayhome Airlines";
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user:'ershacl123@gmail.com',
+              pass:'ershacl0'
+            }
+        });
         var mailOptions = {
             from: 'nowayhomeairlines@gmail.com',
             to: query[0].User.email,
             subject: sub,
             text: txt
         };
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'nowayhomeairlines@gmail.com',
-                pass: 'nowayhomefarmers1'
-            }
-        });
+      
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
@@ -1093,19 +1090,20 @@ app.post("/email", async (req, res) => {
     sub = "Your Itinerary details of reservation: !" + q[0]._id;
     txt = iten(q[0]);
     txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user:'ershacl123@gmail.com',
+          pass:'ershacl0'
+        }
+    });
     var mailOptions = {
         from: 'nowayhomeairlines@gmail.com',
         to: q[0].User.email,
         subject: sub,
         text: txt
     };
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'nowayhomeairlines@gmail.com',
-            pass: 'nowayhomefarmers1'
-        }
-    });
+   
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
@@ -1290,19 +1288,20 @@ async function sendEmail(result, product, email) {
     sub = "Reservation : " + product._id + " confirmation!";
     txt = iten(product);
     txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user:'ershacl123@gmail.com',
+          pass:'ershacl0'
+        }
+    });
     var mailOptions = {
         from: 'nowayhomeairlines@gmail.com',
         to: email,
         subject: sub,
         text: txt
     };
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'nowayhomeairlines@gmail.com',
-            pass: 'nowayhomefarmers1'
-        }
-    });
+   
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
@@ -1352,19 +1351,20 @@ async function editRes(resv, email, update, str, val) {
 
             txt += "\n" + "\n";
             txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user:'ershacl123@gmail.com',
+                  pass:'ershacl0'
+                }
+            });
             var mailOptions = {
                 from: 'nowayhomeairlines@gmail.com',
                 to: email,
                 subject: sub,
                 text: txt
             };
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'nowayhomeairlines@gmail.com',
-                    pass: 'nowayhomefarmers1'
-                }
-            });
+            
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
                     console.log(error);
@@ -1459,19 +1459,20 @@ function addRes(ob, email) {
         sub = "Reservation : " + result._id + " confirmation!";
         txt = iten(ob);
         txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user:'ershacl123@gmail.com',
+              pass:'ershacl0'
+            }
+        });
         var mailOptions = {
             from: 'nowayhomeairlines@gmail.com',
             to: email,
             subject: sub,
             text: txt
         };
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'nowayhomeairlines@gmail.com',
-                pass: 'nowayhomefarmers1'
-            }
-        });
+        
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
@@ -1526,19 +1527,20 @@ function editRes(resv, email, update, str, val) {
 
             txt += "\n" + "\n";
             txt += "We can't wait for you to fly with us!" + "\n" + "Thank you for flying with nowayhome airlines." + "\n" + "nowayhome Airlines";
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user:'ershacl123@gmail.com',
+                  pass:'ershacl0'
+                }
+            });
             var mailOptions = {
                 from: 'nowayhomeairlines@gmail.com',
                 to: email,
                 subject: sub,
                 text: txt
             };
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'nowayhomeairlines@gmail.com',
-                    pass: 'nowayhomefarmers1'
-                }
-            });
+           
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
                     console.log(error);
