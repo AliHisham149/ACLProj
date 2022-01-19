@@ -65,7 +65,7 @@ import ChooseSeat from './ChooseSeat';
 import Layout from './Layout'
 import Search from './Search'
 import SearchBody from './SearchBody';
-import Searchu from './Searchu'
+import SearchMain from './SearchMain'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -1136,7 +1136,7 @@ function User() {
 
                 {/* <ChooseSeat logout={logoutClicked} edit={editProfile} />  */}
 
-                {loginClicked? <LoginPage/> : (searchBClicked ? <Searchu style={{ marginLeft: 100 }} /> : (editProfile ? <EditProfile logout={logoutClicked} back={backButton} component={<User />} /> : (logoutClicked || backButton ? <App /> : (viewResFlights ? <ViewResFlights edit={editProfile} logout={logoutClicked} back={backButton} component={<User />} /> :
+                {loginClicked? <LoginPage/> : (searchBClicked ? <SearchMain style={{ marginLeft: 100 }} /> : (editProfile ? <EditProfile logout={logoutClicked} back={backButton} component={<User />} /> : (logoutClicked || backButton ? <App /> : (viewResFlights ? <ViewResFlights edit={editProfile} logout={logoutClicked} back={backButton} component={<User />} /> :
                     <div style={{ marginTop: 500, marginLeft: 30 }}>
 
 

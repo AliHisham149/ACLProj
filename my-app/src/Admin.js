@@ -90,7 +90,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import StaticDatePicker from '@mui/lab/StaticDatePicker';
 import { useNavigate } from 'react-router-dom';
 import { VectorMap } from '@south-paw/react-vector-maps';
-import world from './world.json';
+
 import CircularProgress from '@mui/material/CircularProgress';
 import PersonIcon from '@mui/icons-material/Person';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';

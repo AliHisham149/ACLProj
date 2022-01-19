@@ -6,7 +6,7 @@ import BaggageAllowance from './BaggageAllowance';
 import Transacc from './Transacc';
 import CreateAccount from './CreateAccount';
 import Admin from './Admin';
-import Searchu from './Searchu'
+import SearchMain from './SearchMain'
 import SearchResults from './SearchResults';
 import Footer from './Footer';
 import SearchRes from './SearchRes'
@@ -38,14 +38,14 @@ function HomePage() {
             <BrowserRouter>
                 <AppBarr />
                 <Routes>
-                     <Route path='/' element={<Searchu />}> </Route>
+                     <Route path='/' element={<SearchMain />}> </Route>
                    
                     <Route path='/BaggageAllowance' element={<BaggageAllowance />}> </Route>
                     <Route path='/Transacc' element={<Transacc />}> </Route>
                     <Route path='/SignUp' element={<CreateAccount />}> </Route>
                     <Route path='/Login' element={<LoginPage />}> </Route>
                     <Route path='/Admin' element={<Admin />}> </Route>
-                    <Route path='/Search' element={<Searchu />}> </Route>
+                    <Route path='/Search' element={<SearchMain />}> </Route>
                     <Route path='/SearchResults' element={<SearchResults />}> </Route>
                     <Route path='/SearchRes' element={<SearchRes />}> </Route>
                     <Route path='/Seats' element={<Seats />}> </Route>

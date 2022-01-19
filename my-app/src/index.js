@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import ChooseSeat from './ChooseSeat';
 import Summary from './Summary';
 import DepartureList from './DepartureList'
-import Searchu from './Searchu';
+import SearchMain from './SearchMain';
 import User from './User';
 import LoginPage from './LoginPage';
 import CreateAccount from './CreateAccount';
