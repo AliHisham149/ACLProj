@@ -43,6 +43,14 @@ When user confirms his booking , A summary with all details of his trip are show
 4. Express
 
 ### How to Use?:
+1. When on Home page in the top right corner you have the option to Login if you already have an account or signup or you are a new user,you also can surf as a        guest but some functionalities won't be available for you to use.
+2. On Home page you can search for available flights according to your search criteria.
+3. You can then choose your flight from the shown flights.
+4. Then you can choose your desired return flight from the shown flights.
+5. You can proceed to seat selection.
+6. After seat selection you proceed to payment.
+7. Entering your payment details and then pay the amount and confirm your booking.
+
 
 
 ### Contribute:
