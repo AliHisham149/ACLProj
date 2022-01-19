@@ -42,9 +42,6 @@ When user confirms his booking , A summary with all details of his trip are show
 3. Mongo
 4. Express
 
-### API references:
-
-
 ### How to Use?:
 
 
