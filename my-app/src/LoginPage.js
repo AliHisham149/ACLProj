@@ -87,7 +87,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
-import AppBarr from './AppBarr';
+import Navigation from './Navigation';
 import { useNavigate } from 'react-router-dom';
 import CreateAccount from './CreateAccount';
 
@@ -290,7 +290,7 @@ function LoginPage() {
 
     return (
         <div>
-            <AppBarr />
+            <Navigation />
 
             <Stack direction="row" spacing={2}>
                 <Paper style={{ width: 700, height: 450, backgroundColor: '#e0dfdf' }}>

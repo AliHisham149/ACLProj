@@ -110,7 +110,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AppBarr from './AppBarr';
+import Navigation from './Navigation';
 import { useNavigate } from 'react-router-dom';
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -355,7 +355,7 @@ function BaggageAllowance() {
     };
     return (
         <div>
-            <AppBarr />
+            <Navigation />
             <div
 
                 id='intro-example'

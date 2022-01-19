@@ -31,75 +31,7 @@ import Stack from '@mui/material/Stack';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import DepartureList from './DepartureList';
 import axios from 'axios';
-import AppBar from '@mui/material/AppBar';
-
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-
-import Tooltip from '@mui/material/Tooltip';
-import App from './App';
-import EditProfile from './EditProfile';
-import ViewResFlights from './ViewResFlights';
-import SearchIcon from '@mui/icons-material/Search';
-import LanguageIcon from '@mui/icons-material/Language';
-import Language from '@mui/icons-material/Language';
-import UpgradeIcon from '@mui/icons-material/Upgrade';
-import Anchor from '@restart/ui/esm/Anchor';
-import LuggageIcon from '@mui/icons-material/Luggage';
-import RoomServiceIcon from '@mui/icons-material/RoomService';
-import HotelIcon from '@mui/icons-material/Hotel';
-import CarRentalIcon from '@mui/icons-material/CarRental';
-import GroupsIcon from '@mui/icons-material/Groups';
-import Groups from '@mui/icons-material/Groups';
-import PeopleIcon from '@mui/icons-material/People';
-import CardTravelIcon from '@mui/icons-material/CardTravel';
-import SchoolIcon from '@mui/icons-material/School';
-import HubIcon from '@mui/icons-material/Hub';
-import ChooseSeat from './ChooseSeat';
-import Layout from './Layout'
-import Search from './Search'
-import SearchBody from './SearchBody';
-import SearchMain from './SearchMain'
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { fontWeight } from '@mui/system';
-import DeleteIcon from '@mui/icons-material/Delete';
-import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
-import NightShelterIcon from '@mui/icons-material/NightShelter';
-import LocalDiningIcon from '@mui/icons-material/LocalDining';
-import WifiIcon from '@mui/icons-material/Wifi';
-import Wifi from '@mui/icons-material/Wifi';
-import LoyaltyIcon from '@mui/icons-material/Loyalty';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { FormLabel } from '@material-ui/core';
-import { Checkbox } from '@mui/material';
-import { FormGroup } from 'react-bootstrap';
-import { Link } from '@mui/material';
-import AppBarr from './AppBarr';
-
-
-
-
-
 import { useNavigate } from 'react-router-dom';
 
 const Alert = React.forwardRef(function Alert(props, ref) {

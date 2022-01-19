@@ -114,7 +114,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
-function AppBarr() {
+function Navigation() {
     const navigate = useNavigate();
     const images = [{ url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyC8qitchp3CTc0tRNk5VHwTmXw7Gt7zzqMA&usqp=CAU', title: 'On Board', width: '50%' }]
 
@@ -322,4 +322,4 @@ function AppBarr() {
    
 }
 
-export default AppBarr;
+export default Navigation;

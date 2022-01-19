@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import AppBarr from './AppBarr';
+import Navigation from './Navigation';
 import LoginPage from './LoginPage';
 import BaggageAllowance from './BaggageAllowance';
 import Transacc from './Transacc';
@@ -36,7 +36,7 @@ function HomePage() {
         <div>
            
             <BrowserRouter>
-                <AppBarr />
+                <Navigation />
                 <Routes>
                      <Route path='/' element={<SearchMain />}> </Route>
                    
