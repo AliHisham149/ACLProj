@@ -68,7 +68,7 @@ To contribute you need to:
 6. Change directory to backend.
 7. Use npm install command in order to download the Node Modules of the project.
 8. Change directory again in order to open the app.js Folder inside the backend project.
-9. Run the backend using the command npm run devStart.
+9. Run the backend using the command "node app.js".
 10. Open another terminal for your frontend project.
 11. Change directory to my-app.
 12. Use npm install command in order to download the Node Modules used in the project.
