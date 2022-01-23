@@ -1,7 +1,7 @@
 # No Way Home Airlines
 
 ### Project Title:
-Our Website is an online airline reservation system that offers manz services for users like: 
+Our Website is an online airline reservation system that offers many services for users like: 
 1. Registration of new users.
 2. Search for flights and reserve their trips.
 3. View their reserved trips and their details.
